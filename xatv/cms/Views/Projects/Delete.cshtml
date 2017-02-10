@@ -1,0 +1,41 @@
+﻿@model cms.Models.projects_fund
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Bạn có chắc chắn xóa dự án này?</h3>
+<fieldset>
+    
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         Đã ủng hộ
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.money1)
+    </div>
+
+    <div class="display-label">
+         Cần ủng hộ
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.money2)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

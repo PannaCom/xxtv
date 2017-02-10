@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<cms.Models.saoke>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Danh sách ủng hộ";
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+}
+
+<div id="works"  class=" clearfix grid" >
+    <h2 style="text-align:center;">Danh sách ủng hộ</h2>
+ <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="text-align:center;">                                                      
+                            <input name="fname" type="text" id="fname" value="@ViewBag.name" class="form-control fll" placeholder="gõ từ khóa cần tìm"  onkeyup="autosearch();"/> 
+                            <input name="fromdate" type="text" id="fromdate" value="@ViewBag.fromdate" class="form-control fll" placeholder="Từ ngày"/> 
+                            <input name="todate" type="text" id="todate" value="@ViewBag.todate" class="form-control fll" placeholder="Đến ngày"/>                                  
+                            <button type="button" class="btn btn-default span10" onclick="search();" style="text-align:center;">Tìm kiếm</button>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Ngày tháng</th>
+                                            <th>Số tiền</th>
+                                            <th>Chi tiết</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model){
+                                            <tr class="odd gradeX">
+                                                <td>@String.Format("{0:dd/MM/yyyy}",item.date)@*@item.date.ToString("dd/MM/yyyy")*@</td>
+                                                <td>@String.Format("{0:#,##0}", item.money)</td>
+                                                <td>@item.des</td>
+                                                @*<td><a href="/News/Edit/@item.id">Sửa</a>-<a href="/News/Delete/@item.id">Xóa</a></td>*@
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
+                    <ul class="pagination clearfix">
+                            <li class="disabled"><a href="#">«</a></li>
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            { 
+                                 <text><li><a href="/ThongKe/List?name=@ViewBag.name&page=@i">@i</a></li></text>
+                            }
+                    </ul>
+                </div>
+            </div>
+</div>
+<script>
+    var urlSearch = "";
+    function search() {
+        var parts = document.getElementById("fromdate").value.split("/");
+        var fdate = parts[1] + "/" + parts[0] + "/" + parts[2];
+        parts = document.getElementById("todate").value.split("/");
+        var tdate = parts[1] + "/" + parts[0] + "/" + parts[2];
+        window.location.href = "/ThongKe/List?name=" + document.getElementById("fname").value + "&fromdate=" + fdate + "&todate=" + tdate;
+    }
+    function autosearch() {
+        var keyword = document.getElementById("fname").value;
+        urlSearch = '/ThongKe/autosearch?keyword=';
+        //alert(keyword);
+        $('#fname').autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);                
+                return false;
+            },
+            minLength: 1
+        });
+    }
+    $(function () {
+        $("#fromdate").datepicker();
+        $("#todate").datepicker();
+    });
+   
+</script>

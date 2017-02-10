@@ -1,0 +1,63 @@
+﻿@model cms.Models.saoke
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>saoke</legend>
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.date)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.date)
+            @Html.ValidationMessageFor(model => model.date)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.date_id)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.date_id)
+            @Html.ValidationMessageFor(model => model.date_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.money)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.money)
+            @Html.ValidationMessageFor(model => model.money)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.des)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.des)
+            @Html.ValidationMessageFor(model => model.des)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

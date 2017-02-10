@@ -1,0 +1,17 @@
+﻿@{
+var myChart = new Chart(width:800, height: 400)
+            .AddTitle("Thống kê quỹ theo tháng2")
+            .AddSeries(
+                name: "Tháng",
+                xValue: new[] { "90000" },
+                yValues: new[] { "80000" })
+            .Write();
+            
+            myChart = new Chart(width: 800, height: 400)
+            .AddTitle("Thống kê quỹ theo tiền")
+            .AddSeries(
+                name: "Tiền",
+                xValue: new[] {"90000"},
+                yValues: new[] { "80000" })
+            .Write();
+ }

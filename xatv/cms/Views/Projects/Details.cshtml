@@ -1,0 +1,36 @@
+﻿@model cms.Models.projects_fund
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>projects_fund</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.money1)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.money1)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.money2)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.money2)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

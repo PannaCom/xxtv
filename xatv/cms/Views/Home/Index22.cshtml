@@ -1,0 +1,219 @@
+﻿@model PagedList.IPagedList<cms.Models.news_item>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Xây trường cho em";
+    ViewBag.Des = "Dự án từ thiện gây quỹ xây trường cho trẻ em vùng cao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var link = "";
+    var item_chart = 0;
+}
+
+<div id="works" class="clearfix grid">
+    @{
+        foreach (var item in Model)
+        {
+            link = "/news/" + cms.Config.unicodeToNoMark(item.title) + "-" + item.id;
+            <text>
+                <figure class="effect-oscar  wowload fadeIn">
+                    <a href="@link"><img src="@item.image" alt="img01" class="slhp" /></a>
+                    <figcaption>
+                        <h5 style="background-color:#008000;"><a href="@link" style="text-decoration:none;border:none;">@item.title</a></h5>
+                        <p>
+                            @Html.Raw(@item.des)
+                            <a href="@link">Xem chi tiết</a>
+                        </p>
+                    </figcaption>
+                </figure>
+            </text>
+        }
+    }
+    <div class="col-lg-12">
+        <ul class="pagination clearfix">
+            <li class="disabled"><a href="#">«</a></li>
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <text>
+                    <li><a href="/Home/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
+            }
+        </ul>
+    </div>
+</div>
+<div id="chart" class=" clearfix grid">
+    <h4 style="padding-left:5px;">Thống kê tỷ lệ ủng hộ các dự án</h4>
+    @foreach (var item in ViewBag.projects)
+    {
+        item_chart++;
+        int percent = (int)((item.money1 * 100) / item.money2);
+        int width = (int)(percent * 400) / 100;
+        var widthpx = width + "px";
+        var image = "";
+        if (percent == 100) { image = "<img src=\"/Images/full.gif\" style=\"width:50px;height:50px;\">"; }
+        else { image = "<img src=\"/Images/continue.gif\" style=\"width:50px;height:50px;\">"; }
+        <text>
+            <div style="width:400px;background-color:#00ff90;position:relative;float:left;display:block;margin-left:10px;">
+                <h5 style="font-weight:bold;">Dự án @item.name @Html.Raw(@image)</h5>
+                <span style="font-size:12px;position:relative;float:left;display:block;color:red;font-weight:bold;">@String.Format("{0:#,##0}", item.money1)</span>
+                <div id="progressbar_@item_chart" style="width:400px;background-color:blue;position:relative;float:left;display:block;">
+                    <div id="progresslabel_@item_chart" style="width:@widthpx;background-color:red;position:relative;float:left;display:block;"><span style="font-size:12px;font-weight:bold;color:yellow;">@percent%</span></div>
+                </div>
+                <span style="font-size:12px;position:relative;float:left;display:block;color:blue;font-weight:bold;">@String.Format("{0:#,##0}", item.money2)</span>
+            </div>
+            @*<script>$("#progressbar_@item_chart").progressbar("value", 180);</script>*@
+        </text>
+
+    }
+</div>
+<h4 style="padding-left:5px;padding-top:20px;">Danh sách ủng hộ mới nhất</h4>
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <input name="namesaoke" type="text" id="namesaoke" class="form-control fll" placeholder="gõ từ khóa cần tìm" onkeyup="autosearch();" />
+
+            <button type="button" class="btn btn-default" onclick="searchsaoke();">Tìm kiếm</button>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="dataTable_wrapper">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Ngày tháng</th>
+                            <th>Số tiền</th>
+                            <th>Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.sk)
+                        {
+                            <tr class="odd gradeX">
+                                <td>@String.Format("{0:dd/MM/yyyy}", item.date)@*@item.date.ToString("dd/MM/yyyy")*@</td>
+                                <td>@String.Format("{0:#,##0}", item.money)</td>
+                                <td>@item.des</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>
+<!-- Cirlce Starts -->
+<div id="about" class="container spacer about">
+    <h2 class="text-center wowload fadeInUp">Gây quỹ xây trường cho em</h2>
+    <div class="row">
+        <div class="col-sm-6 wowload fadeInLeft">
+            <h4><i class="fa fa-paint-brush"></i>Mục đích</h4>
+            <p>
+                Trẻ em ở khắp nước ta vẫn còn rất nhiều khó khăn, có những nơi vùng xa xôi hẻo lánh, các em không được đến trường, thiếu
+                ăn thiếu mặc, hoặc được đến trường mà nhà tranh vách đất, gió lùa rét căm căm mùa đông, nắng soi qua đầu mùa hạ.
+            </p>
+
+
+        </div>
+        <div class="col-sm-6 wowload fadeInRight">
+            <h4><i class="fa fa-code"></i> Thiện nguyện</h4>
+            <p>Chúng tôi kết nối những tấm lòng thiện nguyện chung tay ủng hộ, mang đến và động viên các em đến trường, thêm cái áo, tấm chăm, giúp cái bảng, cái bàn cái ghế, xây những ngôi trường cho các em được đến trường, vì các em là tương lai của chính chúng ta, của đất nước này</p>
+        </div>
+    </div>
+
+    <div class="process">
+        <h3 class="text-center wowload fadeInUp">Quy trình ủng hộ</h3>
+        <ul class="row text-center list-inline  wowload bounceInUp">
+            <li>
+                <span><i class="fa fa-history"></i><b>Khảo sát các điểm trường</b></span>
+            </li>
+            <li>
+                <span><i class="fa fa-puzzle-piece"></i><b>Lên kế hoạch ủng hộ</b></span>
+            </li>
+            <li>
+                <span><i class="fa fa-database"></i><b>Gây quỹ</b></span>
+            </li>
+            <li>
+                <span><i class="fa fa-magic"></i><b>Xây trường</b></span>
+            </li>
+            <li>
+                <span><i class="fa fa-cloud-upload"></i><b>Bàn giao</b></span>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- #Cirlce Ends -->
+<!--Contact Starts-->
+<div id="contact" class="spacer">
+
+    <div class="container contactform center">
+        <h2 class="text-center  wowload fadeInUp">Gửi địa điểm mới</h2>
+        <div class="row wowload fadeInLeftBig">
+            <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+                <input type="text" id="fname" placeholder="Họ tên">
+                <input type="text" id="phone" placeholder="Số điện thoại">
+                <textarea rows="5" id="message" placeholder="Nội dung"></textarea>
+                <input type="button" class="btn btn-primary" value="Send" onclick="AddNew();"></input>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!--Contact Ends-->
+<script>
+    function AddNew() {
+        var formdata = new FormData(); //FormData object
+        var name = document.getElementById("fname").value;
+        var phone = document.getElementById("phone").value;
+        var message = document.getElementById("message").value;
+
+        //var depth=@ViewBag.depth;
+        if (name == "") {
+            alert("Nhập họ tên");
+            return;
+        }
+        if (phone == "") {
+            alert("Nhập số điện thoại");
+            return;
+        }
+        if (message == "") {
+            alert("Nhập nội dung");
+            return;
+        }
+        formdata.append("name", name);
+        formdata.append("phone", phone);
+        formdata.append("message", message);
+
+        //formdata.append("depth", depth);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Home/Add_New_Gopy');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == "1") {
+                    alert("Bạn đã gửi nội dung thành công! Trân trọng cảm ơn sự đóng góp của bạn!");
+                    window.location.href = "/Home/Index";
+                } else {
+                    alert("Lỗi mạng");
+                }
+            }
+
+        }
+    }
+    function searchsaoke() {
+        window.location.href = "/ThongKe/List?name=" + document.getElementById("namesaoke").value;
+    }
+    function autosearch() {
+        var keyword = document.getElementById("namesaoke").value;
+        urlSearch = '/ThongKe/autosearch?keyword=';
+        $('#namesaoke').autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);
+                return false;
+            },
+            minLength: 1
+        });
+    }
+</script>

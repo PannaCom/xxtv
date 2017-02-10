@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Html.Raw(ViewBag.Title)</title>
+    @*Seo application*@
+    <meta name="description" content="@Html.Raw(ViewBag.Des)">
+    <meta name="keywords" content="@ViewBag.Keyword">
+    <meta name="author" content="@ViewBag.Author">
+    <meta name="robots" content="index,follow,noodp">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="og:type" content="@ViewBag.TypePage" />
+    <meta property="og:url" content="@ViewBag.Url">
+    <meta property="og:title" content="@Html.Raw(ViewBag.Title)">
+    <meta property="og:description" content="@Html.Raw(ViewBag.Des)">
+    <meta property="og:image" itemprop="thumbnailUrl" content="@ViewBag.thumbnailUrl">
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Content/xaytruong/css/Styles.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    @*CSS*@
+    @*css local*@
+    @RenderSection("Styles", false)
+
+</head>
+<body>
+    <header>
+        <div id="header">
+            <div id="logoBlock">
+                <div class="pageContent noBorderRadiusBottom">
+                    <div class="container">
+                        <div id="logo">
+                            <a href="/">
+                                <span></span>
+                                <img src="~/Content/xaytruong/images/xaytruong.png" alt="Xây trường.vn">
+                            </a>
+                        </div>
+                        <span class="helper"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-default" role="navigation" id="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Trang chủ</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown nav_menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quỹ về xây trường <span class="caret"></span></a>
+                                <ul class="dropdown-menu">                                  
+                                    <li class="dropdown-header">
+                                    <h3>Quỹ về xây trường</h3>
+                                    Liên kết nhanh
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown nav_menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Diễn đàn <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">
+                                        <h3>Diễn đàn</h3>
+                                        Liên kết nhanh
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown nav_menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Đóng góp <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">
+                                        <h3>Đóng góp</h3>
+                                        Liên kết nhanh
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+            </nav>
+
+        </div>
+    </header>
+    
+    <!-- Page Content -->
+    <div class="container">
+        @RenderBody()
+        
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2017</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+    </div>
+    <!-- /.container -->
+
+   
+    @*JS*@
+    
+    @*js local*@
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/xaytruong/js/scripts.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

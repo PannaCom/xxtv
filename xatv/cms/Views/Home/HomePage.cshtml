@@ -1,0 +1,33 @@
+﻿@{
+    string url = Request.Url.Authority + HttpContext.Current.Request.RawUrl.ToString();
+    string host = Request.Url.Authority;
+    if (Request.ServerVariables["HTTPS"] == "on")
+    {
+        url = "https://" + url;
+        host = "https://" + host;
+    }
+    else
+    {
+        url = "http://" + url;
+        host = "http://" + host;
+    }
+   
+}
+
+@{
+    ViewBag.Title = "Xây trường cho em";
+    ViewBag.Des = "Dự án từ thiện gây quỹ xây trường cho trẻ em vùng cao";
+    ViewBag.Keyword = "";
+    ViewBag.Author = "";
+    ViewBag.TypePage = "";
+    ViewBag.thumbnailUrl = "";
+    ViewBag.Url = url;
+    Layout = "~/Views/Shared/xaytruong/_Layout.cshtml";
+    
+}
+
+
+
+
+<h2>@ViewBag.Title</h2>
+

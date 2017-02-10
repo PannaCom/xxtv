@@ -1,0 +1,11 @@
+﻿@model cms.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="social" id="socialLoginForm">
+    <h2>Đăng nhập để đấu giá.</h2>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>
+

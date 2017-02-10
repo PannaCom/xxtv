@@ -1,0 +1,36 @@
+﻿
+@model PagedList.IPagedList<cms.Models.news_item>
+@using PagedList.Mvc; 
+@{
+    ViewBag.Title = "Xây trường cho em";
+    ViewBag.Des = "Dự án từ thiện gây quỹ xây trường cho trẻ em vùng cao";
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    var link = "";
+}
+
+<div id="works"  class=" clearfix grid">
+        @{            
+            foreach (var item in Model)
+            {
+                link ="/news/"+ cms.Config.unicodeToNoMark(item.title)+"-"+item.id;
+                <text>
+                    <figure class="effect-oscar  wowload fadeIn">
+                        <a href="@link"><img src="@item.image" alt="img01" class="slhp" /></a>
+                        <figcaption>
+                            <h5 style="background-color:#008000;"><a href="@link" style="text-decoration:none;border:none;">@item.title</a></h5>
+                            <p>@Html.Raw(@item.des)
+                            <a href="@link" >Xem chi tiết</a></p>            
+                        </figcaption>
+                    </figure>
+                </text>
+            }
+        }
+        <div class="col-lg-12">
+                    <ul class="pagination clearfix">
+                            <li class="disabled"><a href="#">«</a></li>
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            { 
+                                 <text><li><a href="/Home/Gift?menu_id=@ViewBag.menu_id&page=@i">@i</a></li></text>
+                            }
+       </div>
+</div>

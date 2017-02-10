@@ -1,0 +1,311 @@
+﻿@model cms.Models.news_item
+@{
+    ViewBag.Title = Model.title;
+    ViewBag.Des = Model.des;
+    Layout = "~/Views/Shared/_LayoutDetail.cshtml";
+    var link = "http://xaytruong.vn/news/" + cms.Config.unicodeToNoMark(Model.title) + "-" + Model.id;
+    ViewBag.Url = link;
+    ViewBag.Image = "http://xaytruong.vn"+Model.image;
+    ViewBag.id = Model.id;
+}
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>        
+<script src="~/signalR/hubs"></script>
+<div id="works"  class=" clearfix grid">
+    <div class="col-lg-12">
+        <div class="col-lg-8" style="float:left;margin-top:5px;">
+            <h3 >@Model.title</h3>
+            <p ><b>@Model.des</b></p>
+            <p style="text-align:left;">@Html.Raw(@Model.full_content)</p>
+            <div class="fb-like" data-href="@link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+            <div class="fb-comments" data-href="@link" data-numposts="5"></div>
+        </div>
+        <div class="col-lg-4" style="float:left;margin-top:5px;">
+            @if (Model.menu_id!=6){
+                <h4>Xem Thêm</h4>
+                foreach (var item in ViewBag.news) {
+                    link = "/news/" + cms.Config.unicodeToNoMark(item.title) + "-" + item.id;
+                    <div style="display:block;position:relative;float:left;margin-bottom:30px;">
+                        <a href="@link"><img src="@item.image" style="height:80px;width:80px;float:left;">
+                        <b style="margin-left:10px;float:right;font-size:12px;">@item.title</b></a>                   
+                    </div>
+                }
+            }else{
+                <div style="height:100%;min-width:320px;border:solid 1px #00ff90;position:fixed;top:20px;display:block;z-index:9001;background-color:#00ff90;">
+                    <div id="notice_time" style="font-weight:bold;color:red;font-size:12px;"></div>
+                    <div id="notice_price" style="font-weight:bold;color:blue;font-size:12px;">Giá cao nhất:@string.Format("{0:#,#}", ViewBag.pricemax),@Html.Raw(@ViewBag.usermax)</div>
+                    <div id="chatreal" style="padding-top:10px;height:460px;border:solid 1px #0094ff;overflow: scroll;font-size:12px;">
+                        @Html.Raw(@ViewBag.daugialist)
+                    </div>
+                    @if (cms.Config.getCookie("user_name") == "") { 
+                        @*<section class="social" id="socialLoginForm" style="padding-top:10px;">
+                            <h2>Đăng nhập để đấu giá.</h2>
+                            @Html.Action("ExternalLoginsList","Account", new { ReturnUrl = link })
+                        </section>*@
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
+                    }
+                    else
+                    {
+                        <div id="formnhapgia">
+                            <table>
+                                <tr><td>Nhập giá:</td><td><input type="text" id="price" name="price" placeholder="nhập giá mua"></td></tr>
+                                <tr><td>Ghi chú:</td><td><textarea id="says" name="says" placeholder="nội dung" rows="3" cols="40" ></textarea></td></tr>
+                                <tr><td colspan="2" align="center"><input type="button" value="đấu giá" onclick="addNew();"></td></tr>
+                            </table>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    var Logged=true;
+    if ("@cms.Config.getCookie("user_id")"==""){Logged=false;}
+        var chat = $.connection.ync;
+        $(function () {
+            chat.client.addNewAll = function (token, message) {
+                //$('#' + group).append('<li>' + message + '</li>');
+                //alert("ok");
+                if (message != "") {
+                    ////$('#dv' + token).append('<li>' + message + '</li>');
+                    //document.getElementById("noticebox").style.display = '';
+                    $('#chatreal').append(message);
+                }
+            };            
+            //Sever gọi hàm này ở các máy client để hiển thị nội dung chát
+            //Roomname ở đây vừa là room chát, được gán bằng id của news
+            chat.client.addChatMessage = function (roomName,user_id,user_name,contents,price) {
+                //alert(contents);
+                if (contents != "" && user_name!="" && user_name!="undefined") {
+                    var content = "<div class=bgheader4><div class=chatLine1><span class=userchat2><b><i><a href=\"https:////www.facebook.com//"+user_id+"\"><img src=\"http:////graph.facebook.com//"+user_id+"/picture\">" + user_name + "</a></i></b></span></div><div class=chatLine2><span class=chatcontent>: ra giá mua <b>"+formatCurrency(price)+"</b>," + contents + "</span></a></div></div>";
+                    if (price=="" || price==0) content = "<div class=bgheader4><div class=chatLine1><span class=userchat2><b><i><a href=\"https:////www.facebook.com//"+user_id+"\"><img src=\"http:////graph.facebook.com//"+user_id+"/picture\">" + user_name + "</a></i></b></span></div><div class=chatLine2><span class=chatcontent><i>" + contents + "</i></span></a></div></div>";
+                    $('#chatreal').append(content);
+                    //alert("4");
+                    //if (document.getElementById("checkScrollbar_"+roomName).checked){
+                        var elem = document.getElementById('chatreal');// just to scroll down the line 
+                        elem.scrollTop = elem.scrollHeight;
+                    //}
+                    //alert("5");
+                    chat.server.broadCast("@Model.id", user_name, contents, price);
+                    //alert("6");
+                   
+                }
+            };
+            $.connection.hub.start().done(function () {
+                chat.server.joinRoom("@Model.id",'@cms.Config.getCookie("user_id")', '@cms.Config.getCookie("user_name")', 'Đã tham gia vào phiên đấu giá', '');
+            });
+        });
+    var elem = document.getElementById('chatreal');// just to scroll down the line 
+    elem.scrollTop = elem.scrollHeight;
+    function addNew() {
+        var formdata = new FormData(); //FormData object
+        var price = document.getElementById("price").value;
+        var says = document.getElementById("says").value;        
+        var news_id =@Model.id;
+        
+        //var depth=@ViewBag.depth;
+        if (price==""){
+            alert("Nhập giá mua");
+            return;
+        }
+        if (isNaN(price)){
+            alert("Giá mua phải là chữ số");
+            return;
+        }
+        formdata.append("price", price);
+        formdata.append("says", says);       
+        formdata.append("news_id", news_id);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/News/DauGia_Add_New');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText == "1") {
+                    //alert("@cms.Lang.alert_save_success");
+                    chat.server.joinRoom("@Model.id",'@cms.Config.getCookie("user_id")', '@cms.Config.getCookie("user_name")', says, price);
+                    getUserMax(@Model.id);
+                } else {
+                    alert("Không gửi được tin nhắn này, gọi hỗ trợ kỹ thuật!");
+                }
+            }
+           
+        }
+    
+    }
+    function checkSubmit(event){        
+        if(event && event.keyCode == 13)
+        {
+            //alert("gui di"+token+" "+link+" "+title);
+            addNew();
+        }
+    }
+    
+    function updateUser(user,id){
+        var formdata = new FormData(); //FormData object
+        var news_id =@Model.id;
+        if (user=="undefined" || user==null || user=="") return;
+        if (id.length<5) return;
+        formdata.append("id", news_id);
+        formdata.append("user", user);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/News/updateUser');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText != "") {
+                    Logged=true;
+                    window.location.reload();
+                } else {
+                    alert("Đăng nhập không thành công");
+                }
+            }
+           
+        }
+    }
+    function getUserMax() {
+        var formdata = new FormData(); //FormData object
+        var news_id =@Model.id;
+             
+        formdata.append("id", news_id);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/News/getUserMax');
+        xhr.send(formdata);
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if (xhr.responseText != "") {
+                    $("#notice_price").html(xhr.responseText);
+                } else {
+                    
+                }
+            }
+           
+        }
+    
+    }
+    // set the date we're counting down to
+    var target_date = new Date("@ViewBag.todate").getTime();
+
+    // variables for time units
+    var days, hours, minutes, seconds;
+
+    // get tag element
+    var countdown = document.getElementById("notice_time");
+
+    // update the tag with id "countdown" every 1 second
+    setInterval(function () {
+        
+        // find the amount of "seconds" between now and target
+        var current_date = new Date().getTime();
+        if (current_date>target_date) {
+            $("#formnhapgia").html("<b style='color:red;'>Hết Giờ</b>");
+        }
+        var seconds_left = (target_date - current_date) / 1000;
+
+        // do some time calculations
+        days = parseInt(seconds_left / 86400);
+        seconds_left = seconds_left % 86400;
+
+        hours = parseInt(seconds_left / 3600);
+        seconds_left = seconds_left % 3600;
+
+        minutes = parseInt(seconds_left / 60);
+        seconds = parseInt(seconds_left % 60);
+
+        // format countdown string + set tag value
+        countdown.innerHTML = "Còn: "+days + "d, " + hours + "h, "
+        + minutes + "m, " + seconds + "s";  
+    }, 1000);
+        
+    </script> 
+
+    <script>
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log(response);
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                testAPI();
+                //if (response.name!=="" && response.name!=null) {
+                    //updateUser(response.name,response.id);
+                //}
+                console.log(response.name);
+            } else if (response.status === 'not_authorized') {
+                // The person is logged into Facebook, but not your app.
+                console.log("The person is logged into Facebook, but not your app.");
+            } else {
+                // The person is not logged into Facebook, so we're not sure if
+                // they are logged into this app or not.
+            }
+        }
+
+        // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '972244092814242',
+                cookie: true, // enable cookies to allow the server to access 
+                // the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v2.2' // use version 2.2
+            });
+
+            // Now that we've initialized the JavaScript SDK, we call 
+            // FB.getLoginStatus().  This function gets the state of the
+            // person visiting this page and can return one of three states to
+            // the callback you provide.  They can be:
+            //
+            // 1. Logged into your app ('connected')
+            // 2. Logged into Facebook, but not your app ('not_authorized')
+            // 3. Not logged into Facebook and can't tell if they are logged into
+            //    your app or not.
+            //
+            // These three cases are handled in the callback function.
+
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+                console.log("Fb response");
+                console.log(response);
+                console.log('Successful login for: ' + response.name+","+response.id);
+                //document.getElementById('status').innerHTML =
+                //  'Thanks for logging in, ' + response.name + '!';
+                //updateUser(response.name,response.id);
+                if (response.name!=="" && response.name!=null && Logged==false) {
+                    updateUser(response.name,response.id+"");
+                }
+            });
+        }
+      </script>

@@ -1,0 +1,44 @@
+﻿@model cms.Models.saoke
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>saoke</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.date)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.date)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.date_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.date_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.money)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.money)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.des)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.des)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

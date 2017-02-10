@@ -1,0 +1,80 @@
+﻿@model cms.Models.projects_fund
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm mới dự án</h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<div id="wrapper">
+        <!-- Navigation -->
+        @Html.Partial("~/Views/_vMenu.cshtml")
+        <!-- Page Content -->
+        <div id="page-wrapper">
+
+@using (Html.BeginForm("Create", "Projects", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+       
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tên dự án</label>
+                <input name="name" type="text" id="name" value="" class="form-control" placeholder="Gõ tiêu đề"/>                
+        </div>
+
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Số tiền đã huy động</label>
+                <input name="money1" type="text" id="money1" value="" class="form-control" placeholder="Số tiền đã huy động"/>                
+        </div>
+        <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Số tiền cần huy động</label>
+                <input name="money2" type="text" id="money2" value="" class="form-control" placeholder="Số tiền cần huy động"/>                
+        </div>
+        <p>
+            <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+ </div>
+        <!-- /#page-wrapper -->        
+    </div>
+<script>
+    function checkField() {
+
+
+        if (document.getElementById("name").value == "") {
+            alert("Nhập tên dự án!");
+            document.getElementById("name").focus();
+            return false;
+        }
+
+        if (document.getElementById("money1").value == "") {
+            alert("Nhập số tiền đã huy động!");
+            document.getElementById("money1").focus();
+            return false;
+        }
+        if (document.getElementById("money2").value == "") {
+            alert("Nhập số tiền cần huy động!");
+            document.getElementById("money2").focus();
+            return false;
+        }
+        if (isNaN(document.getElementById("money1").value)) {
+            alert("Nhập số tiền đã huy động!");
+            document.getElementById("money1").focus();
+            return false;
+        }
+        if (isNaN(document.getElementById("money2").value)) {
+            alert("Nhập số tiền cần huy động!");
+            document.getElementById("money2").focus();
+            return false;
+        }
+        document.getElementById("EditForm").submit();
+    }
+</script>

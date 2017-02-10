@@ -1,0 +1,23 @@
+﻿@model cms.Models.news_item
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div id="wrapper">
+        <!-- Navigation -->
+        @Html.Partial("~/Views/_vMenu.cshtml")
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <p>Bạn có chắc chắn muốn xóa bài viết:<b>@Model.title</b>?</p>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+            </div>
+    </div>

@@ -1,0 +1,141 @@
+﻿@model PagedList.IPagedList<cms.Models.saoke>
+@using PagedList.Mvc; 
+
+@{
+    ViewBag.Title = "Danh sách sao kê";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- Navigation -->
+        @Html.Partial("~/Views/_vMenu.cshtml")
+<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">@ViewBag.Title</h1>
+                    <label for="room" style="width:auto;display:block;">Upload file excel thống kê (<a href="/images/file/test.xlsx">xem file mẫu tại đây</a>)</label>
+                    <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                    <div id="progressbar" class="progressbar">
+                        <div id="progresslabel" class="progressbarlabel"></div>
+                     </div> 
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">                                                      
+                            <input name="name" type="text" id="name" value="@ViewBag.name" class="form-control fll" placeholder="gõ từ khóa cần tìm"  onkeyup="autosearch();"/> 
+                            <input name="fromdate" type="text" id="fromdate" value="@ViewBag.fromdate" class="form-control fll" placeholder="Từ ngày"/> 
+                            <input name="todate" type="text" id="todate" value="@ViewBag.todate" class="form-control fll" placeholder="Đến ngày"/>                                  
+                            <button type="button" class="btn btn-default" onclick="search();">Tìm kiếm</button>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="dataTable_wrapper">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Ngày tháng</th>
+                                            <th>Số tiền</th>
+                                            <th>Chi tiết</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model){
+                                            <tr class="odd gradeX">
+                                                <td>@String.Format("{0:dd/MM/yyyy}",item.date)@*@item.date.ToString("dd/MM/yyyy")*@</td>
+                                                <td>@String.Format("{0:#,##0}", item.money)</td>
+                                                <td>@item.des</td>
+                                                <td><a href="/ThongKe/Delete/@item.id">Xóa</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-12">
+                    <ul class="pagination clearfix">
+                            <li class="disabled"><a href="#">«</a></li>
+                            @for (int i = 1; i <= Model.PageCount; i++)
+                            { 
+                                 <text><li><a href="/ThongKe/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
+                            }
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <!-- /#page-wrapper -->
+<script>
+    var urlSearch = "";
+    function search() {
+        var parts = document.getElementById("fromdate").value.split("/");
+        var fdate = parts[1] + "/" + parts[0] + "/" + parts[2];
+        parts = document.getElementById("todate").value.split("/");
+        var tdate = parts[1] + "/" + parts[0] + "/" + parts[2];
+        window.location.href = "/ThongKe/Index?name=" + document.getElementById("name").value + "&fromdate=" + fdate + "&todate=" + tdate;
+    }
+    function autosearch() {
+        var keyword = document.getElementById("name").value;
+        urlSearch = '/ThongKe/autosearch?keyword=';
+        $('#name').autocomplete({
+            source: urlSearch + keyword,
+            select: function (event, ui) {
+                $(event.target).val(ui.item.value);                
+                return false;
+            },
+            minLength: 1
+        });
+    }
+    $(function () {
+        $("#fromdate").datepicker();
+        $("#todate").datepicker();
+    });
+    function uploadProcess() {
+        //var title = unicodeToNoMark($("#title").val());
+        //if (title.trim() == "") {
+        //    alert("Nhập tên bài viết trước");
+        //    document.getElementById("title").focus();
+        //    document.getElementById('imageFile').value = "";
+        //    return;
+        //}
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        //formdata.append("filename", title);
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/ThongKe/uploadFile');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+               
+                if (xhr.responseText == "1") {
+                    alert("Upload thành công");
+                    location.reload();
+                } else {
+                    alert("Upload không thành công. Xem lại định dạng file");
+                }
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+</script>

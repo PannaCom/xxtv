@@ -1,0 +1,129 @@
+﻿/*!
+ * Start Bootstrap - Blog Home (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+
+footer {
+    margin: 50px 0;
+}
+
+#header {
+    position: static;
+    width: auto;
+}
+
+#header > div {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.noBorderRadiusBottom {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+}
+
+#logo img {
+    max-width: 280px;
+    width: 100%;
+}
+
+#logo img {
+    vertical-align: middle;
+    /*max-width: 100%;*/
+}
+
+#logo {
+    display: block;
+    float: left;
+    line-height: 90px;
+    height: 95px;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+#header .pageContent {
+    position: relative;
+}
+
+#logoBlock .pageContent {
+    border-left: none;
+    border-right: none;
+}
+
+#logoBlock .pageContent {
+    background-color: #FFFFFF;
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-top: 1px solid rgb(163, 201, 73);
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -khtml-border-radius: 0;
+    border-radius: 0;
+}
+
+#navigation {
+    position: relative;
+}
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+.navbar-collapse {
+  max-height: 100%;
+}
+@media screen and (max-width: 768px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+  .row-offcanvas-right .sidebar-offcanvas {
+    right: -60%;
+  
+    margin-right: 0px;
+    background-color: #f3f3f3;
+  }
+  .row-offcanvas-left .sidebar-offcanvas {
+    left: -50%; 
+  }
+  .row-offcanvas-right.active {
+    right: 60%;  
+  }
+  .row-offcanvas-left.active {
+    left: 50%;  
+  }
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 60%;  
+    height: 100%;
+    display: none;
+  
+  }
+}
+
+#navigation {
+    background-color: #4E8D1A;
+    border-color: #488218;
+}
+
+#navigation .navbar-nav>li>a {
+    color: #fff;
+}
+
+#navigation .navbar-nav > li > a{
+    text-transform: uppercase;
+}
+
+.nav_menu .dropdown-header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}

@@ -1,0 +1,248 @@
+﻿@model cms.Models.news_item
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Sửa bài viết</h2>
+
+<script src="/Scripts/ckeditor/ckeditor.js"></script>
+<div id="wrapper">
+        <!-- Navigation -->
+        @Html.Partial("~/Views/_vMenu.cshtml")
+        <!-- Page Content -->
+        <div id="page-wrapper">
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { id = "EditForm" })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tiêu đề bài viết</label>
+                <input name="title" type="text" id="title" value="@Model.title" class="form-control" placeholder="Gõ tiêu đề"/>                
+              </div>
+                      
+        
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Upload ảnh đại diện</label>
+                <input name="imageFile" type="file" id="imageFile" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcess();"/>                                
+                <div id="progressbar" class="progressbar">
+                    <div id="progresslabel" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         
+       
+              <div class="form-group" id="dvimagefile">
+                <label for="room" style="width:auto;display:block;">Ảnh đại diện</label>
+                <input name="image" type="hidden" id="image" value="@Model.image" class="form-control" />
+                <input name="total_views" type="hidden" id="total_views" value="@Model.total_views" class="form-control" /> 
+                <input name="datetime" type="hidden" id="datetime" value="@Model.datetime" class="form-control" /> 
+                <input name="datetimeid" type="hidden" id="datetimeid" value="@Model.datetimeid" class="form-control" />                  
+                 <div id="imageShow" style="width:200px;height:126px;"><img src="@Model.image" style="width:200px;height:126px;"></div>
+              </div>
+         
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Tóm tắt:</label>
+                <textarea name="des" rows="3" id="des" class="form-control" maxlength="250">@Model.des</textarea>
+              </div>
+              <div class="form-group">
+                 <label>Thuộc menu(danh mục)</label>
+                 <select class="form-control" id="parent_id">                                                        
+                 </select>
+                  <input name="menu_id" type="hidden" id="menu_id" value="@Model.menu_id" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Ngày kết thúc đấu giá(nếu tin thuộc chuyên mục đấu giá):</label>
+                <input type="date" id="date_time_dau_gia" name="date_time_dau_gia" value="@String.Format("{0:yyyy-MM-dd}", @Model.date_time_dau_gia)">
+              </div>
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Chèn ảnh vào bài viết</label>
+                <input name="imageFileContent" type="file" id="imageFileContent" value="" multiple="multiple" class="form-control" runat="server" onchange="uploadProcessContent();"/>                                
+                <div id="progressbarContent" class="progressbar">
+                    <div id="progresslabelContent" class="progressbarlabel"></div>
+                 </div>  
+              </div>
+         
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">List ảnh bài viết</label>
+                  <div id="imageShowContent" style="width:auto;height:auto;"></div>
+              </div>
+         
+              <div class="form-group">
+                <label for="room" style="width:auto;display:block;">Nội dung</label>                
+                 <textarea name="full_content" id="full_content" rows="20" cols="80">
+                     @Model.full_content
+                </textarea>
+                <script>
+                    CKEDITOR.replace('full_content');
+                </script>                       
+              </div>
+        
+                      
+    </fieldset>
+}
+<p>
+    <button type="button" class="btn btn-info" onclick="checkField();">Cập nhật</button>
+</p>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+            </div>
+        <!-- /#page-wrapper -->        
+    </div>
+<div id="loadingImage" name="loadingImage" style="z-index:1000;position:fixed;left:40%;top:30%;width:32px;height:32px;display:none;">
+    <img src="/Images/loading.gif">
+</div>
+<script>
+
+    //Image upload
+    function uploadProcess() {
+        //var title = unicodeToNoMark($("#title").val());
+        //if (title.trim() == "") {
+        //    alert("Nhập tên bài viết trước");
+        //    document.getElementById("title").focus();
+        //    document.getElementById('imageFile').value = "";
+        //    return;
+        //}
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFile');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            break;
+        }
+        //formdata.append("filename", title);
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbar").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/News/UploadImageProcess');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                $('#imageShow').html("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#image').val(xhr.responseText);
+                $('#dvimagefile').show();
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    //Image upload
+    function uploadProcessContent() {
+        //var title = unicodeToNoMark($("#title").val());
+        //if (title.trim() == "") {
+        //    alert("Nhập tên bài viết trước");
+        //    document.getElementById("title").focus();
+        //    document.getElementById('imageFileContent').value = "";
+        //    return;
+        //}
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('imageFileContent');
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+            //break;
+        }
+        //formdata.append("filename", title);
+        showLoadingImage();
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var progress = Math.round(evt.loaded * 100 / evt.total);
+                $("#progressbarContent").progressbar("value", progress);
+            }
+        }, false);
+
+        xhr.open('POST', '/News/UploadImageProcessContent');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //$('#imageShowContent').append("<img src=\"" + xhr.responseText + "\" width=200 height=126>");
+                $('#imageShowContent').append(xhr.responseText);
+                hideLoadingImage();
+            }
+        }
+        return false;
+    }
+    
+    function checkField() {
+
+
+        if (document.getElementById("title").value == "") {
+            alert("Nhập tên bài viết!");
+            document.getElementById("title").focus();
+            return false;
+        }
+
+        if (document.getElementById("image").value == "") {
+            alert("Upload ảnh đại diện!");
+            document.getElementById("imageFile").focus();
+            return false;
+        }
+        if (document.getElementById("des").value == "") {
+            alert("Nhập tóm tắt!");
+            document.getElementById("des").focus();
+            return false;
+        }
+        if (document.getElementById("parent_id").value == "-1") {
+            alert("Nhập menu danh mục cho tin");
+            document.getElementById("parent_id").focus();
+            return false;
+        }
+        if (document.getElementById("parent_id").value == 6 && document.getElementById("date_time_dau_gia").value == "") {
+            alert("Nhập ngày tháng kết thúc đấu giá");
+            document.getElementById("date_time_dau_gia").focus();
+            return false;
+        }
+        if (document.getElementById("full_content").value == "") {
+            alert("Nhập nội dung!");
+            document.getElementById("full_content").focus();
+            return false;
+        }
+
+        document.getElementById("menu_id").value = document.getElementById("parent_id").value;
+        document.getElementById("EditForm").submit();
+    }
+    function getAllNodeMenu(idselected, parent_id) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/Menu/getAllNodeMenu?idselected=' + idselected + "&parent_id=" + parent_id);
+        xhr.send();
+        var content = "";
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                $("#parent_id").html(xhr.responseText);
+                //$("#menulist").val(value);
+                //alert(news);
+            }
+        }
+    }
+
+    getAllNodeMenu(@Model.menu_id, @Model.menu_id);
+    $("#progressbar").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabel").text($("#progressbar").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabel").text("File upload successful!");
+        }
+    });
+    $("#progressbarContent").progressbar({
+        max: 100,
+        change: function (evt, ui) {
+            $("#progresslabelContent").text($("#progressbarContent").progressbar("value") + "%");
+        },
+        complete: function (evt, ui) {
+            $("#progresslabelContent").text("File upload successful!");
+        }
+    });
+    evt.preventDefault();
+</script>

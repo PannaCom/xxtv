@@ -1,0 +1,15 @@
+﻿@{
+    string url = Request.Url.Authority + HttpContext.Current.Request.RawUrl.ToString();
+    string host = Request.Url.Authority;
+    if (Request.ServerVariables["HTTPS"] == "on")
+    {
+        url = "https://" + url;
+        host = "https://" + host;
+    }
+    else
+    {
+        url = "http://" + url;
+        host = "http://" + host;
+    }
+    ViewBag.Url = url;
+}

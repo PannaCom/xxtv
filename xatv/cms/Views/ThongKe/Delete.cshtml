@@ -1,0 +1,15 @@
+﻿@model cms.Models.saoke
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<h2>Delete</h2>
+<h3>Bạn có chắc chắn xóa?@Model.des</h3>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

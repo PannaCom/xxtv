@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Web.WebPages.OAuth;
+using cms.Models;
+
+namespace cms
+{
+    public static class AuthConfig
+    {
+        public static void RegisterAuth()
+        {
+            // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,
+            // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166
+
+            //OAuthWebSecurity.RegisterMicrosoftClient(
+            //    clientId: "",
+            //    clientSecret: "");
+
+            //OAuthWebSecurity.RegisterTwitterClient(
+            //    consumerKey: "",
+            //    consumerSecret: "");
+
+            //OAuthWebSecurity.RegisterFacebookClient(
+            //    appId: "",
+            //    appSecret: "");
+
+            //OAuthWebSecurity.RegisterGoogleClient();
+            OAuthWebSecurity.RegisterFacebookClient(
+               appId: "972244092814242",
+               appSecret: "1a1ec3e4f0ed216dc120d6cae743a4d8");
+            //OAuthWebSecurity.RegisterGoogleClient();
+        }
+    }
+}
