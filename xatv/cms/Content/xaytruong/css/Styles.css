@@ -3,6 +3,11 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
 
 
 footer {
@@ -14,10 +19,10 @@ footer {
     width: auto;
 }
 
-#header > div {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+    #header > div {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 
 .noBorderRadiusBottom {
     -moz-border-radius: 0;
@@ -76,54 +81,88 @@ footer {
  * --------------------------------------------------
  */
 .navbar-collapse {
-  max-height: 100%;
+    max-height: 100%;
 }
+
 @media screen and (max-width: 768px) {
-  .row-offcanvas {
-    position: relative;
-    -webkit-transition: all 0.25s ease-out;
-    -moz-transition: all 0.25s ease-out;
-    transition: all 0.25s ease-out;
-  }
-  .row-offcanvas-right .sidebar-offcanvas {
-    right: -60%;
-  
-    margin-right: 0px;
-    background-color: #f3f3f3;
-  }
-  .row-offcanvas-left .sidebar-offcanvas {
-    left: -50%; 
-  }
-  .row-offcanvas-right.active {
-    right: 60%;  
-  }
-  .row-offcanvas-left.active {
-    left: 50%;  
-  }
-  .sidebar-offcanvas {
-    position: absolute;
-    top: 0;
-    width: 60%;  
-    height: 100%;
-    display: none;
-  
-  }
+    .row-offcanvas {
+        position: relative;
+        -webkit-transition: all 0.25s ease-out;
+        -moz-transition: all 0.25s ease-out;
+        transition: all 0.25s ease-out;
+    }
+
+    .row-offcanvas-right .sidebar-offcanvas {
+        right: -60%;
+        margin-right: 0px;
+        background-color: #f3f3f3;
+    }
+
+    .row-offcanvas-left .sidebar-offcanvas {
+        left: -50%;
+    }
+
+    .row-offcanvas-right.active {
+        right: 60%;
+    }
+
+    .row-offcanvas-left.active {
+        left: 50%;
+    }
+
+    .sidebar-offcanvas {
+        position: absolute;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        display: none;
+    }
 }
 
 #navigation {
     background-color: #4E8D1A;
     border-color: #488218;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -o-border-radius: 0;
 }
 
-#navigation .navbar-nav>li>a {
-    color: #fff;
-}
+    #navigation .navbar-nav > li > a,
+    #navigation .navbar-brand {
+        color: #fff;
+    }
 
-#navigation .navbar-nav > li > a{
-    text-transform: uppercase;
-}
+    #navigation .navbar-nav > li > a {
+        text-transform: uppercase;
+    }
+
+    #navigation .navbar-nav > .open > a,
+    #navigation .navbar-nav > .open > a:focus,
+    #navigation .navbar-nav > .open > a:hover {
+        color: #fff;
+        background-color: #a3c949;
+    }
+
+    #navigation .navbar-nav > .open,
+    #navigation .navbar-nav > .open,
+    #navigation .navbar-nav > .open {
+        border-top-color: #a3c949;
+        border-bottom-color: #a3c949;
+    }
+
+    #navigation .dropdown-menu {
+        border-color: #a3c949;
+    }
 
 .nav_menu .dropdown-header h3 {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.nav_menu .divider {
+    background-color: #a3c949;
+}
+
+
+
