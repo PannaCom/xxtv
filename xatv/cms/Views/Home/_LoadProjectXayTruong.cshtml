@@ -10,10 +10,12 @@
         <div class="kh-donggop">
             <div class="row">
 
+                @{int i = 1;}
                 @foreach (var item in @Model)
                 {
+                    
                     int percent = (int)((item.money1 * 100) / item.money2);
-                    int i = 1;
+                    
                     <div class="kh-col col-md-4 col-sm-6 col-xs-12">
                         <div class="kh-border">
                             <div class="kh-image">
@@ -49,7 +51,7 @@
                                 <span class="kh-progress-price"><span>@percent</span>%</span>
                                 <span class="kh-clock">
                                     <i class="fa fa-clock-o"></i>
-                                    <span class="clock-day-@i" data-clock="@string.Format("{0:yyyy/MM/dd hh:mm:ss}", item.date_init)"></span>
+                                    <span class="clock-day-@i" data-clock="@string.Format("{0:yyyy/MM/dd}", item.date_init)"></span>
                                 </span>
 
                             </div>

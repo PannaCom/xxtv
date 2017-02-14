@@ -160,82 +160,82 @@ namespace cms.Controllers
             var p = (from q in db.saokes where q.des.Contains(keyword) select q.des).ToList();
             return JsonConvert.SerializeObject(p);
         }
-        public string uploadFile(HttpPostedFileBase file)
-        {
-            try
-            {
-                string physicalPath = HttpContext.Server.MapPath("../" + Config.FileImagePath + "\\");
-                string nameFile = String.Format("{0}.xlsx", Guid.NewGuid().ToString());
-                int countFile = Request.Files.Count;
-                string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
-                for (int i = 0; i < countFile; i++)
-                {
-                    if (System.IO.File.Exists(fullPath))
-                    {
-                        System.IO.File.Delete(fullPath);
-                    }
-                    Request.Files[i].SaveAs(fullPath);
-                    break;
-                }
-                //string ok = resizeImage(Config.imgWidthNews, Config.imgHeightNews, fullPath, Config.NewsImagePath + "/" + nameFile);
-                //return Config.FileImagePath + "/" + nameFile;
-                foreach (var worksheet in Workbook.Worksheets(fullPath))
-                {
-                    foreach (var row in worksheet.Rows)
-                    {
-                        string abc = "";
-                        DateTime d1 = DateTime.Now;
-                        decimal money = 0;
-                        string des = "";
-                        foreach (var cell in row.Cells)
-                        {
-                            if (cell == null) continue;
-                            if (cell.ColumnIndex == 0) d1 = Config.toDate(cell.Text);
-                            if (cell.ColumnIndex == 3 && cell.Text != "")
-                            {
-                                try
-                                {
-                                    decimal.TryParse(cell.Text, out money);
-                                }
-                                catch (Exception ex)
-                                {
-                                    money = 0;
-                                }
-                            }
-                            if (cell.ColumnIndex == 5) des = cell.Text;
-                            //if ((cell.ColumnIndex == 0 || cell.ColumnIndex == 3 || cell.ColumnIndex == 5) && cell.Text != null) abc += cell.Text.ToString();
-                            if (cell.ColumnIndex == 5)
-                            {
-                                if (d1.Year != DateTime.Now.AddDays(-30000).Year && des != "")
-                                {
-                                    bool p = db.saokes.Any(o => o.des.Contains(des));
-                                    if (!p && money != 0)
-                                    {
-                                        saoke sk = new saoke();
-                                        sk.date = d1;
-                                        sk.date_id = int.Parse(Config.convertToDateTimeId(d1.ToString()));
-                                        sk.money = money;
-                                        sk.des = des;
-                                        db.saokes.Add(sk);
-                                        db.SaveChanges();
-                                    }
-                                }
-                                //money = 0;
-                                //des = "";
-                                break;
-                            }
-                            //sb.Append(abc + "\r\n<br>");
-                        }
+        //public string uploadFile(HttpPostedFileBase file)
+        //{
+        //    try
+        //    {
+        //        string physicalPath = HttpContext.Server.MapPath("../" + Config.FileImagePath + "\\");
+        //        string nameFile = String.Format("{0}.xlsx", Guid.NewGuid().ToString());
+        //        int countFile = Request.Files.Count;
+        //        string fullPath = physicalPath + System.IO.Path.GetFileName(nameFile);
+        //        for (int i = 0; i < countFile; i++)
+        //        {
+        //            if (System.IO.File.Exists(fullPath))
+        //            {
+        //                System.IO.File.Delete(fullPath);
+        //            }
+        //            Request.Files[i].SaveAs(fullPath);
+        //            break;
+        //        }
+        //        //string ok = resizeImage(Config.imgWidthNews, Config.imgHeightNews, fullPath, Config.NewsImagePath + "/" + nameFile);
+        //        //return Config.FileImagePath + "/" + nameFile;
+        //        foreach (var worksheet in Workbook.Worksheets(fullPath))
+        //        {
+        //            foreach (var row in worksheet.Rows)
+        //            {
+        //                string abc = "";
+        //                DateTime d1 = DateTime.Now;
+        //                decimal money = 0;
+        //                string des = "";
+        //                foreach (var cell in row.Cells)
+        //                {
+        //                    if (cell == null) continue;
+        //                    if (cell.ColumnIndex == 0) d1 = Config.toDate(cell.Text);
+        //                    if (cell.ColumnIndex == 3 && cell.Text != "")
+        //                    {
+        //                        try
+        //                        {
+        //                            decimal.TryParse(cell.Text, out money);
+        //                        }
+        //                        catch (Exception ex)
+        //                        {
+        //                            money = 0;
+        //                        }
+        //                    }
+        //                    if (cell.ColumnIndex == 5) des = cell.Text;
+        //                    //if ((cell.ColumnIndex == 0 || cell.ColumnIndex == 3 || cell.ColumnIndex == 5) && cell.Text != null) abc += cell.Text.ToString();
+        //                    if (cell.ColumnIndex == 5)
+        //                    {
+        //                        if (d1.Year != DateTime.Now.AddDays(-30000).Year && des != "")
+        //                        {
+        //                            bool p = db.saokes.Any(o => o.des.Contains(des));
+        //                            if (!p && money != 0)
+        //                            {
+        //                                saoke sk = new saoke();
+        //                                sk.date = d1;
+        //                                sk.date_id = int.Parse(Config.convertToDateTimeId(d1.ToString()));
+        //                                sk.money = money;
+        //                                sk.des = des;
+        //                                db.saokes.Add(sk);
+        //                                db.SaveChanges();
+        //                            }
+        //                        }
+        //                        //money = 0;
+        //                        //des = "";
+        //                        break;
+        //                    }
+        //                    //sb.Append(abc + "\r\n<br>");
+        //                }
 
-                    }
-                }
-                return "1";
-            }
-            catch (Exception ex)
-            {
-                return "0";
-            }
-        }
+        //            }
+        //        }
+        //        return "1";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return "0";
+        //    }
+        //}
         public class saokechart
         {
             public int mo { get; set; }
