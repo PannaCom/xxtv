@@ -1,0 +1,23 @@
+﻿@model List<cms.Models.news_item>
+@using cms; 
+
+@if (Model != null)
+{
+    <div class="flexslider sectionMarginTop" id="panel_newsitem">
+        <ul class="slides">
+            @foreach (var item in Model)
+            {
+                string _link = string.Format("/news/{0}-{1}", Config.unicodeToNoMark(item.title), item.id);
+                <li>
+                    <div style="position: relative;">
+                        <a href="@_link" title="@item.title" class="thumb-zoom">
+                            <img src="@item.image" class="item_img" />
+                        </a>
+                        <p class="flex-caption"><a href="@_link" title="@item.title">@item.title</a></p>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+

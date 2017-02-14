@@ -1,0 +1,72 @@
+﻿@model List<cms.Models.projects_fund>
+@using cms;
+
+@if (Model != null)
+{
+
+    <script src="~/Content/xaytruong/js/jquery.countdown.min.js"></script>
+    <div id="panel_project" class="widget hook-widget">
+        <h3>Hiểu và thương <a href="#" style="float: right;margin-right: 4px;">Xem tất cả</a></h3>
+        <div class="kh-donggop">
+            <div class="row">
+
+                @foreach (var item in @Model)
+                {
+                    int percent = (int)((item.money1 * 100) / item.money2);
+                    int i = 1;
+                    <div class="kh-col col-md-4 col-sm-6 col-xs-12">
+                        <div class="kh-border">
+                            <div class="kh-image">
+                                <a href="#" class="thumb-zoom">
+                                    <img class="img-responsive" src="@item.img">
+                                </a>
+                            </div>
+                            <div class="kh-box">
+                                <div class="kh-title">
+                                    <a href="#">@item.name</a>
+                                </div>
+                                <div class="kh-content">
+                                    @if (item.des.Length > 88)
+                                    {
+                                        @item.des.Substring(0, 88).ToString()<text>...</text>
+                                    }
+                                    else
+                                    {
+                                        @item.des
+                                    }
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="kh-price">Ðã góp: <span class="kh-price-compare">@string.Format("{0:#,##}", item.money1)</span> <em>đ</em></div>
+
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;">
+                                    <span class="sr-only">@percent% Complete</span>
+                                </div>
+                            </div>
+
+                            <div class="kh-bottom">
+                                <span class="kh-progress-price"><span>@percent</span>%</span>
+                                <span class="kh-clock">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span class="clock-day-@i" data-clock="@string.Format("{0:yyyy/MM/dd hh:mm:ss}", item.date_init)"></span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            getDayLeft("span.clock-day-@i", $('.clock-day-@i').data('clock'));
+                        })
+                    </script>
+                    i++;
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+
+}

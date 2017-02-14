@@ -1,0 +1,24 @@
+﻿@model List<cms.Models.news_item>
+@using cms;
+ 
+@if (Model != null)
+{
+
+    <div class="hero-unit sectionMarginTop" id="hero_panel">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                string _link = string.Format("/news/{0}-{1}", Config.unicodeToNoMark(item.title), item.id);
+                <div class="item col-md-4">
+                    <div class="item_new">
+                        <a href="@_link" title="@item.title" class="thumb-zoom">
+                            <img src="@item.image" />
+                        </a>
+                        <div class="item-caption"><a href="@_link" title="@item.title">@item.title</a></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
