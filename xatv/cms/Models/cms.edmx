@@ -4,32 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="xaytruongModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="xaytruongModelStoreContainer">
-          <EntitySet Name="daugia" EntityType="xaytruongModel.Store.daugia" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="editors" EntityType="xaytruongModel.Store.editors" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="gopy" EntityType="xaytruongModel.Store.gopy" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="members" EntityType="xaytruongModel.Store.members" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="menu" EntityType="xaytruongModel.Store.menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="modules" EntityType="xaytruongModel.Store.modules" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="news_item" EntityType="xaytruongModel.Store.news_item" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="news_item_image" EntityType="xaytruongModel.Store.news_item_image" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="news_item_menu" EntityType="xaytruongModel.Store.news_item_menu" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="pages" EntityType="xaytruongModel.Store.pages" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="pages_modules_pos" EntityType="xaytruongModel.Store.pages_modules_pos" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="projects_fund" EntityType="xaytruongModel.Store.projects_fund" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="saoke" EntityType="xaytruongModel.Store.saoke" store:Type="Tables" Schema="dbo" />
-        </EntityContainer>
+    <Schema Namespace="xaytruongModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="daugia">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="news_id" Type="int" />
           <Property Name="user_id" Type="nvarchar" MaxLength="50" />
           <Property Name="user_name" Type="nvarchar" MaxLength="150" />
           <Property Name="user_email" Type="nvarchar" MaxLength="50" />
-          <Property Name="price" Type="numeric" />
+          <Property Name="price" Type="numeric" Precision="18" Scale="0" />
           <Property Name="says" Type="nvarchar" MaxLength="505" />
           <Property Name="date_time" Type="datetime" />
         </EntityType>
@@ -37,7 +22,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
           <Property Name="pass" Type="nvarchar" MaxLength="50" />
           <Property Name="type" Type="int" />
@@ -46,7 +31,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="phone" Type="nvarchar" MaxLength="50" />
           <Property Name="message" Type="ntext" />
@@ -55,7 +40,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_name" Type="nvarchar" MaxLength="150" />
           <Property Name="user_id" Type="nvarchar" MaxLength="50" />
           <Property Name="user_email" Type="nvarchar" MaxLength="50" />
@@ -64,8 +49,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="parent_id" Type="int" />
           <Property Name="type" Type="int" />
           <Property Name="order_no" Type="int" />
@@ -75,7 +60,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
           <Property Name="is_news" Type="tinyint" />
           <Property Name="is_album" Type="tinyint" />
@@ -89,8 +74,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="des" Type="ntext" Nullable="false" />
           <Property Name="full_content" Type="ntext" Nullable="false" />
           <Property Name="image" Type="nvarchar" MaxLength="150" />
@@ -107,7 +92,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="news_item_id" Type="int" />
           <Property Name="image" Type="nvarchar" MaxLength="150" />
         </EntityType>
@@ -115,7 +100,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="news_item_id" Type="int" />
           <Property Name="menu_id" Type="int" />
         </EntityType>
@@ -123,14 +108,14 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="pages_modules_pos">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="pages_id" Type="int" />
           <Property Name="modules_id" Type="int" />
           <Property Name="pos" Type="tinyint" />
@@ -140,55 +125,93 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="150" />
-          <Property Name="money1" Type="numeric" />
-          <Property Name="money2" Type="numeric" />
+          <Property Name="des" Type="nvarchar" MaxLength="505" />
+          <Property Name="money1" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="money2" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="img" Type="nvarchar" MaxLength="505" />
+          <Property Name="date_init" Type="datetime" />
+          <Property Name="project_cat" Type="int" />
+          <Property Name="orderby" Type="int" />
+          <Property Name="provinces" Type="nvarchar" MaxLength="250" />
+          <Property Name="authorid" Type="bigint" />
         </EntityType>
         <EntityType Name="saoke">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="date" Type="datetime" />
           <Property Name="date_id" Type="int" />
-          <Property Name="money" Type="numeric" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="0" />
           <Property Name="des" Type="ntext" />
         </EntityType>
+        <EntityContainer Name="xaytruongModelStoreContainer">
+          <EntitySet Name="daugia" EntityType="Self.daugia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="editors" EntityType="Self.editors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gopy" EntityType="Self.gopy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="members" EntityType="Self.members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modules" EntityType="Self.modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news_item" EntityType="Self.news_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news_item_image" EntityType="Self.news_item_image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news_item_menu" EntityType="Self.news_item_menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pages" EntityType="Self.pages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pages_modules_pos" EntityType="Self.pages_modules_pos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="projects_fund" EntityType="Self.projects_fund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="saoke" EntityType="Self.saoke" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="xaytruongModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="editors" EntityType="xaytruongModel.editor" />
-          <EntitySet Name="menus" EntityType="xaytruongModel.menu" />
-          <EntitySet Name="modules" EntityType="xaytruongModel.module" />
-          <EntitySet Name="news_item_image" EntityType="xaytruongModel.news_item_image" />
-          <EntitySet Name="news_item_menu" EntityType="xaytruongModel.news_item_menu" />
-          <EntitySet Name="pages" EntityType="xaytruongModel.page" />
-          <EntitySet Name="pages_modules_pos" EntityType="xaytruongModel.pages_modules_pos" />
-          <EntitySet Name="news_item" EntityType="xaytruongModel.news_item" />
-          <EntitySet Name="saokes" EntityType="xaytruongModel.saoke" />
-          <EntitySet Name="gopies" EntityType="xaytruongModel.gopy" />
-          <EntitySet Name="projects_fund" EntityType="xaytruongModel.projects_fund" />
-          <EntitySet Name="daugias" EntityType="xaytruongModel.daugia" />
-          <EntitySet Name="members" EntityType="xaytruongModel.member" />
-        </EntityContainer>
+      <Schema Namespace="xaytruongModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="daugia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="news_id" Type="Int32" />
+          <Property Name="user_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="says" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="date_time" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="editor">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="pass" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="gopy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="menu">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="parent_id" Type="Int32" />
           <Property Name="type" Type="Int32" />
           <Property Name="order_no" Type="Int32" />
@@ -198,8 +221,8 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="is_news" Type="Byte" />
           <Property Name="is_album" Type="Byte" />
           <Property Name="is_list" Type="Byte" />
@@ -208,19 +231,37 @@
           <Property Name="is_contact" Type="Byte" />
           <Property Name="type" Type="Int32" />
         </EntityType>
+        <EntityType Name="news_item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="deleted" Type="Int32" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <Property Name="datetimeid" Type="Int32" />
+          <Property Name="total_views" Type="Int32" />
+          <Property Name="user_post" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="menu_id" Type="Int32" />
+          <Property Name="date_time_dau_gia" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="news_item_image">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="news_item_id" Type="Int32" />
-          <Property Name="image" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="news_item_menu">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="news_item_id" Type="Int32" />
           <Property Name="menu_id" Type="Int32" />
         </EntityType>
@@ -228,93 +269,80 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="pages_modules_pos">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="pages_id" Type="Int32" />
           <Property Name="modules_id" Type="Int32" />
           <Property Name="pos" Type="Byte" />
           <Property Name="order_no" Type="Int32" />
         </EntityType>
-        <EntityType Name="news_item">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="title" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="des" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="full_content" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="image" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="status" />
-          <Property Type="Int32" Name="deleted" />
-          <Property Type="DateTime" Name="datetime" Precision="3" />
-          <Property Type="Int32" Name="datetimeid" />
-          <Property Type="Int32" Name="total_views" />
-          <Property Type="String" Name="user_post" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="menu_id" />
-          <Property Type="DateTime" Name="date_time_dau_gia" Precision="3" />
-        </EntityType>
         <EntityType Name="saoke">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="DateTime" Name="date" Precision="3" />
-          <Property Type="Int32" Name="date_id" />
-          <Property Type="Decimal" Name="money" Precision="18" Scale="0" />
-          <Property Type="String" Name="des" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="date_id" Type="Int32" />
+          <Property Name="money" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="des" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="gopy">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="name" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="phone" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="message" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
+        <EntityContainer Name="CMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="daugias" EntityType="Self.daugia" />
+          <EntitySet Name="editors" EntityType="Self.editor" />
+          <EntitySet Name="gopies" EntityType="Self.gopy" />
+          <EntitySet Name="members" EntityType="Self.member" />
+          <EntitySet Name="menus" EntityType="Self.menu" />
+          <EntitySet Name="modules" EntityType="Self.module" />
+          <EntitySet Name="news_item" EntityType="Self.news_item" />
+          <EntitySet Name="news_item_image" EntityType="Self.news_item_image" />
+          <EntitySet Name="news_item_menu" EntityType="Self.news_item_menu" />
+          <EntitySet Name="pages" EntityType="Self.page" />
+          <EntitySet Name="pages_modules_pos" EntityType="Self.pages_modules_pos" />
+          <EntitySet Name="saokes" EntityType="Self.saoke" />
+          <EntitySet Name="projects_fund" EntityType="xaytruongModel.projects_fund" />
+        </EntityContainer>
         <EntityType Name="projects_fund">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="name" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="money1" Precision="18" Scale="0" />
-          <Property Type="Decimal" Name="money2" Precision="18" Scale="0" />
-        </EntityType>
-        <EntityType Name="daugia">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="news_id" />
-          <Property Type="String" Name="user_id" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="user_name" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="user_email" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="price" Precision="18" Scale="0" />
-          <Property Type="String" Name="says" MaxLength="505" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="date_time" Precision="3" />
-        </EntityType>
-        <EntityType Name="member">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="user_name" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="user_id" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="user_email" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="des" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="money1" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="money2" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="img" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="date_init" Type="DateTime" Precision="3" />
+          <Property Name="project_cat" Type="Int32" />
+          <Property Name="orderby" Type="Int32" />
+          <Property Name="provinces" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="authorid" Type="Int64" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="xaytruongModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="xaytruongModelStoreContainer" CdmEntityContainer="CMSEntities">
+          <EntitySetMapping Name="daugias">
+            <EntityTypeMapping TypeName="xaytruongModel.daugia">
+              <MappingFragment StoreEntitySet="daugia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="news_id" ColumnName="news_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="says" ColumnName="says" />
+                <ScalarProperty Name="date_time" ColumnName="date_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="editors">
             <EntityTypeMapping TypeName="xaytruongModel.editor">
               <MappingFragment StoreEntitySet="editors">
@@ -322,6 +350,26 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="pass" ColumnName="pass" />
                 <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gopies">
+            <EntityTypeMapping TypeName="xaytruongModel.gopy">
+              <MappingFragment StoreEntitySet="gopy">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="members">
+            <EntityTypeMapping TypeName="xaytruongModel.member">
+              <MappingFragment StoreEntitySet="members">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -349,6 +397,25 @@
                 <ScalarProperty Name="is_slide" ColumnName="is_slide" />
                 <ScalarProperty Name="is_contact" ColumnName="is_contact" />
                 <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news_item">
+            <EntityTypeMapping TypeName="xaytruongModel.news_item">
+              <MappingFragment StoreEntitySet="news_item">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="des" ColumnName="des" />
+                <ScalarProperty Name="full_content" ColumnName="full_content" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="datetimeid" ColumnName="datetimeid" />
+                <ScalarProperty Name="total_views" ColumnName="total_views" />
+                <ScalarProperty Name="user_post" ColumnName="user_post" />
+                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
+                <ScalarProperty Name="date_time_dau_gia" ColumnName="date_time_dau_gia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -389,76 +456,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="news_item">
-            <EntityTypeMapping TypeName="xaytruongModel.news_item">
-              <MappingFragment StoreEntitySet="news_item">
-                <ScalarProperty Name="date_time_dau_gia" ColumnName="date_time_dau_gia" />
-                <ScalarProperty Name="menu_id" ColumnName="menu_id" />
-                <ScalarProperty Name="user_post" ColumnName="user_post" />
-                <ScalarProperty Name="total_views" ColumnName="total_views" />
-                <ScalarProperty Name="datetimeid" ColumnName="datetimeid" />
-                <ScalarProperty Name="datetime" ColumnName="datetime" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="full_content" ColumnName="full_content" />
-                <ScalarProperty Name="des" ColumnName="des" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="saokes">
             <EntityTypeMapping TypeName="xaytruongModel.saoke">
               <MappingFragment StoreEntitySet="saoke">
-                <ScalarProperty Name="des" ColumnName="des" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="date_id" ColumnName="date_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="gopies">
-            <EntityTypeMapping TypeName="xaytruongModel.gopy">
-              <MappingFragment StoreEntitySet="gopy">
-                <ScalarProperty Name="message" ColumnName="message" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date_id" ColumnName="date_id" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="des" ColumnName="des" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="projects_fund">
             <EntityTypeMapping TypeName="xaytruongModel.projects_fund">
               <MappingFragment StoreEntitySet="projects_fund">
+                <ScalarProperty Name="authorid" ColumnName="authorid" />
+                <ScalarProperty Name="provinces" ColumnName="provinces" />
+                <ScalarProperty Name="orderby" ColumnName="orderby" />
+                <ScalarProperty Name="project_cat" ColumnName="project_cat" />
+                <ScalarProperty Name="date_init" ColumnName="date_init" />
+                <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="money2" ColumnName="money2" />
                 <ScalarProperty Name="money1" ColumnName="money1" />
+                <ScalarProperty Name="des" ColumnName="des" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="daugias">
-            <EntityTypeMapping TypeName="xaytruongModel.daugia">
-              <MappingFragment StoreEntitySet="daugia">
-                <ScalarProperty Name="date_time" ColumnName="date_time" />
-                <ScalarProperty Name="says" ColumnName="says" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="user_email" ColumnName="user_email" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="news_id" ColumnName="news_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="members">
-            <EntityTypeMapping TypeName="xaytruongModel.member">
-              <MappingFragment StoreEntitySet="members">
-                <ScalarProperty Name="user_email" ColumnName="user_email" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -477,8 +498,9 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

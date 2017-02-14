@@ -7,7 +7,7 @@ using System.Web;
 
 namespace cms
 {
-    public class Config
+    public static class Config
     {
         public static string NewsImagePath = "/images/news";
         public static string FileImagePath = "/images/file/";

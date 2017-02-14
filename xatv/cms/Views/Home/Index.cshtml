@@ -15,7 +15,7 @@
 }
 
 @{
-    ViewBag.Title = "Xây trường cho em";
+    ViewBag.Title = "Trang chủ | ";
     ViewBag.Des = "Dự án từ thiện gây quỹ xây trường cho trẻ em vùng cao";
     ViewBag.Keyword = "";
     ViewBag.Author = "";
@@ -29,64 +29,19 @@
 
 <div class="row">
     <!-- Blog Entries Column -->
-    <div class="col-md-8">
+    <div class="col-md-8 main_container">
 
+        <section id="maincontainer">
+            @{Html.RenderAction("LoadNewItems", "Home");}
+            
+            @{Html.RenderAction("LoadNewTopItem");}
 
-        <h1 class="page-header">
-            Page Heading
-            <small>Secondary Text</small>
-        </h1>
-        <!-- First Blog Post -->
-        <h2>
-            <a href="#">Blog Post Title</a>
-        </h2>
-        <p class="lead">
-            by <a href="index.php">Start Bootstrap</a>
-        </p>
-        <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
-        <hr>
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-        <hr>
-        <!-- Second Blog Post -->
-        <h2>
-            <a href="#">Blog Post Title</a>
-        </h2>
-        <p class="lead">
-            by <a href="index.php">Start Bootstrap</a>
-        </p>
-        <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-        <hr>
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum perferendis labore impedit voluptates!</p>
-        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-        <hr>
-        <!-- Third Blog Post -->
-        <h2>
-            <a href="#">Blog Post Title</a>
-        </h2>
-        <p class="lead">
-            by <a href="index.php">Start Bootstrap</a>
-        </p>
-        <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-        <hr>
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id incidunt autem. Magni, ratione.</p>
-        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-        <hr>
-        <!-- Pager -->
-        <ul class="pager">
-            <li class="previous">
-                <a href="#">&larr; Older</a>
-            </li>
-            <li class="next">
-                <a href="#">Newer &rarr;</a>
-            </li>
-        </ul>
+            <div class="home_banner_hoz" style="padding-bottom:10px;box-sizing: border-box;max-width:100%;"><a href="https://donggop.hieuvetraitim.com" target="_blank"><img src="https://www.hieuvetraitim.com/data/quangcao/banner-ngang.jpg" style="max-width:100%"></a></div>
+
+            @{Html.RenderAction("LoadProjectXayTruong");}
+
+        </section>
+
     </div>
     <!-- Blog Sidebar Widgets Column -->
     <div class="col-md-4">
@@ -154,3 +109,41 @@
 <!-- /.row -->
 <hr>
 
+@section scripts {
+    <script src="~/Content/xaytruong/jquery.flexslider-min.js"></script>
+
+    <script>
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: true,
+                directionNav: true,
+                draggable: true,
+            });
+        });
+
+        function getDayLeft(s, d) {
+            $(s).countdown(d)
+            .on('update.countdown', function (event) {
+                var format = '%H:%M:%S';
+                if (event.offset.totalDays > 0) {
+                    format = 'Còn lại %-d ngày%!d ' + format;
+                }
+                if (event.offset.weeks > 0) {
+                    format = 'Còn lại %-w tuần %!w ' + format;
+                }
+                //if (event.offset.totalDays = 0) {
+                //    format = 'Hoàn tất';
+                //}
+                $(this).html(event.strftime(format));
+            })
+            .on('finish.countdown', function (event) {
+                $(this).html(event.strftime(format));
+
+            });
+        }
+
+    </script>
+
+}

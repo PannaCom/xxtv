@@ -18,6 +18,24 @@ namespace cms.Controllers
             return View();
         }
 
+        public ActionResult LoadNewItems()
+        {
+            var data = (from n in db.news_item orderby n.id select n).Skip(3).Take(5).ToList();
+            return PartialView("_LoadNewItems", data);
+        }
+
+        public ActionResult LoadNewTopItem()
+        {
+            var data = (from n in db.news_item orderby n.id select n).Take(3).ToList();
+            return PartialView("_LoadNewTopItem", data);
+        }
+
+        public ActionResult LoadProjectXayTruong()
+        {
+            var data = (from p in db.projects_fund orderby p.date_init descending select p).Take(6).ToList();
+            return PartialView("_LoadProjectXayTruong", data);
+        }
+
         //public ActionResult Index(string name, int? page)
         //{
         //    if (name == null) name = "";

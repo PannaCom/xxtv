@@ -4,20 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a708365328f84abb92edad54a9a8b1d6" Name="Diagram1">
-        <EntityTypeShape EntityType="xaytruongModel.editor" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.menu" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.module" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.news_item_image" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.news_item_menu" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.page" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.pages_modules_pos" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="xaytruongModel.news_item" Width="1.5" PointX="11.421378420396419" PointY="20.745933095340586" />
-        <EntityTypeShape EntityType="xaytruongModel.saoke" Width="1.5" PointX="10.389183840895623" PointY="12.186326017690043" />
-        <EntityTypeShape EntityType="xaytruongModel.gopy" Width="1.5" PointX="11.606694778244336" PointY="9.8481472925507223" />
-        <EntityTypeShape EntityType="xaytruongModel.projects_fund" Width="1.5" PointX="8.7188225522259355" PointY="11.570465123080865" />
-        <EntityTypeShape EntityType="xaytruongModel.daugia" Width="1.5" PointX="1.6419475142108033" PointY="3.5912666486535532" />
-        <EntityTypeShape EntityType="xaytruongModel.member" Width="1.5" PointX="5.7792394262641853" PointY="2.2150949101034061" />
+      <Diagram DiagramId="24c450c294cd4f5a8239af2d6df3828c" Name="Diagram1">
+        <EntityTypeShape EntityType="xaytruongModel.daugia" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.editor" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.gopy" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.member" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.menu" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.module" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.news_item" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.news_item_image" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.news_item_menu" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.page" Width="1.5" PointX="4.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.pages_modules_pos" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.saoke" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="xaytruongModel.projects_fund" Width="1.5" PointX="9.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
