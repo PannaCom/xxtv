@@ -12,11 +12,11 @@ body {
     -ms-text-size-adjust: 100%;
     text-size-adjust: 100%;
     font-size: 14px;
-    font-family: Helvetica, Arial, sans-serif;
+    /*font-family: Helvetica, Arial, sans-serif;*/
     color: rgb(20,20,20);
     background-color: rgb(240,240,240);
     word-wrap: break-word;
-    line-height: 1.28;
+    line-height: 1.28em;
     min-width: 300px;
 }
 
@@ -661,4 +661,8 @@ padding: 0 8px 6px;
 .footerMenu li a:hover {
     text-decoration: none;
     border-bottom: 1px solid #fff;
+}
+
+.footer_album img {
+    height: 200px;
 }
