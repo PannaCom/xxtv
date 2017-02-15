@@ -20,11 +20,9 @@ body {
     min-width: 300px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-size: 100%;
-    font-weight: normal;
-    color: #333;
-}
+/*h1, h2, h3, h4, h5, h6 {
+
+}*/
 
 
 #header {
@@ -171,6 +169,9 @@ h1, h2, h3, h4, h5, h6 {
 .nav_menu .dropdown-header h3 {
     margin-top: 0;
     margin-bottom: 0;
+    font-size: initial;
+    font-weight: normal;
+    color: #333;
 }
 
 .nav_menu .divider {
@@ -222,6 +223,10 @@ h1, h2, h3, h4, h5, h6 {
         padding-left: 0;
         padding-right: 0;
     }
+
+     #panel_newsitem .item_img {
+        height: 400px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -271,9 +276,7 @@ h1, h2, h3, h4, h5, h6 {
         background: rgb(130, 183, 31);
     }
 
-    #panel_newsitem .item_img {
-        height: 400px;
-    }
+   
 
     #panel_newsitem .flex-caption {
         width: 100%;
@@ -485,7 +488,7 @@ address, caption, cite, code, dfn, em, strong, th, var, optgroup {
         transform: scale(1.3);
     }
 
-    .about.spacer {
+.about.spacer {
     padding-left: 4em;
     padding-right: 4em;
 }
@@ -508,34 +511,32 @@ address, caption, cite, code, dfn, em, strong, th, var, optgroup {
 }
 
 .process ul li {
-    width: 10em;
-    height: 10em;
+    width: 12em;
+    height: 12em;
     border: 1px solid #CEEBF0;
     padding: 0;
     border-radius: 50%;
-    margin: 0 1.25em;
+    margin: 0 0.25em;
     line-height: 13.5em;
     color: #21ABCA;
+    background: #fff;
 }
 
-.process ul li span {
-    line-height: 2em;
-    display: inline-block;
-    font-weight: 300;
-}
+    .process ul li a {
+        line-height: 2em;
+        display: inline-block;
+        font-weight: 300;
+        font-size: 1em;
+    }
 
-.process ul li span i {
-    font-size: 3em;
-}
+        .process ul li a i {
+            display: block;
+            margin-bottom: 10px;
+        }
 
-.process ul li span b {
-    display: block;
-    font-size: 1em;
-    font-weight: 300;
-}
 
 section {
-        padding: 50px 0;
+    padding: 50px 0;
     margin: 10px 0;
 }
 
@@ -547,11 +548,11 @@ section .page-header {
     margin-top: 0;
 }
 
-section .page-header h1 {
-    font-size: 36px;
-    color: #7cac3f;
-    margin-top: 0;
-}
+    section .page-header h1 {
+        font-size: 36px;
+        color: #7cac3f;
+        margin-top: 0;
+    }
 
 #footer {
     background: #7fc242;
@@ -559,17 +560,105 @@ section .page-header h1 {
     margin-top: -10px;
 }
 
-#footer footer {
-    background: #333;
-    padding: 15px;
-}
+    #footer footer {
+        background: #61982f;
+        padding: 15px;
+    }
 
 @media (min-width: 801px) {
     .sidebar .section:first-child {
-    margin-top: 0;
-}
+        margin-top: 0;
+    }
 }
 
 .section {
     margin: 20px auto;
+}
+
+.secondaryContent {
+        background: #fff;
+    padding: 0;
+    border: 1px solid #cbcbcb;
+}
+
+.secondaryContent h3 {
+  background: #f1f1f1;
+  border-bottom: 1px solid #cbcbcb;
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+
+.kh-tim {
+    clear: both;
+padding: 0 8px 6px;
+}
+
+    .kh-tim .kh-row {
+        clear: both;
+        margin: 0 -5px;
+        overflow: hidden;
+    }
+
+    .kh-tim .kh-col {
+        float: left;
+        position: relative;
+        min-height: 1px;
+        width: 33.3333%;
+    }
+
+    .kh-tim .kh-padding {
+        padding: 5px 2.5px 0 2.5px;
+    }
+
+    .kh-tim .kh-row:first-child .kh-padding {
+        padding-top: 0;
+    }
+
+    .kh-tim .kh-col img {
+        width: 100%;
+        display: block;
+    }
+
+    .kh-tim .kh-title {
+        display: none;
+        position: absolute;
+        bottom: 0px;
+        background: rgba(0,0,0,0.5);
+        padding: 5px;
+        margin: 0 2.5px;
+        left: 0;
+        right: 0;
+        color: white;
+        text-align: center;
+    }
+
+.item_footer h3 {
+    text-transform: uppercase;
+    color: #fff;
+    border-bottom: 2px dotted;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+.footerMenu {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+    .footerMenu li a {
+        color: #fff;
+    }
+
+    .footerMenu li {
+        line-height: 1.5em;
+    }
+
+.before_f {
+    padding: 10px 0;
+}
+
+.footerMenu li a:hover {
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
 }
