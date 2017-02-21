@@ -36,6 +36,12 @@ namespace cms.Controllers
             return PartialView("_LoadProjectXayTruong", data);
         }
 
+        public ActionResult LoadDonors()
+        {
+            var data = (from p in db.donors orderby p.date descending select p).Take(9).ToList();
+            return PartialView("_LoadDonors", data);
+        }
+
         //public ActionResult Index(string name, int? page)
         //{
         //    if (name == null) name = "";

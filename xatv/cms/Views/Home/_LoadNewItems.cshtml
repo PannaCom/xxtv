@@ -13,7 +13,7 @@
                         <a href="@_link" title="@item.title" class="thumb-zoom">
                             <img src="@item.image" class="item_img" />
                         </a>
-                        <p class="flex-caption"><a href="@_link" title="@item.title">@item.title</a></p>
+                        <p class="flex-caption"><span>Ngày đăng: @string.Format("{0:dd/MM/yyyy}", item.datetime)</span><a href="@_link" title="@item.title">@item.title</a></p>
                     </div>
                 </li>
             }

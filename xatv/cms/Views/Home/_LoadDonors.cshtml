@@ -1,0 +1,33 @@
+﻿@model List<cms.Models.donor>
+@if (Model != null)
+{
+    <div class="section">
+        <div class="secondaryContent widget">
+            <h3>
+                Các doanh nghiệp ủng hộ +
+            </h3>
+            <div class="kh-tim">
+                <div class="kh-row">
+
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="kh-col">
+                            <div class="kh-padding">
+                                <a href="#" target="_blank">
+                                    <img src="@item.img">
+                                    <span class="kh-title" style="display: none;">@item.name</span>
+                                </a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="kh-footer">
+                <a href="#">+ Xem tất cả</a>
+            </div>
+        </div>
+    </div>
+}           
+
