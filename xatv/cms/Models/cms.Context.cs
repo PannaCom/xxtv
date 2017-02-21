@@ -38,5 +38,6 @@ namespace cms.Models
         public virtual DbSet<pages_modules_pos> pages_modules_pos { get; set; }
         public virtual DbSet<saoke> saokes { get; set; }
         public virtual DbSet<projects_fund> projects_fund { get; set; }
+        public virtual DbSet<donor> donors { get; set; }
     }
 }
