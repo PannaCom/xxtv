@@ -39,5 +39,6 @@ namespace cms.Models
         public virtual DbSet<saoke> saokes { get; set; }
         public virtual DbSet<projects_fund> projects_fund { get; set; }
         public virtual DbSet<donor> donors { get; set; }
+        public virtual DbSet<web_link> web_link { get; set; }
     }
 }

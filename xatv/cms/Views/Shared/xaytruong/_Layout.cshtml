@@ -69,7 +69,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand actived text-uppercase" href="#">Trang chủ</a>
+                        <a class="navbar-brand @ViewBag.actived1 text-uppercase" href="#">Trang chủ</a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
 
@@ -77,49 +77,49 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="dropdown nav_menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dự án xây trường <span class="caret"></span></a>
-                                <ul class="dropdown-menu">                                  
+                                <a href="#" class="dropdown-toggle">Dự án xây trường <span class="caret"></span></a>
+                                @*<ul class="dropdown-menu">
                                     <li class="dropdown-header">
-                                    <h3 class="text-uppercase">Dự án xây trường</h3>
-                                    Liên kết nhanh
+                                        <h3 class="text-uppercase">Dự án xây trường</h3>
+                                        Liên kết nhanh
                                     </li>
-                                    @*<li role="separator" class="divider"></li>
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>*@
-                                </ul>
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                </ul>*@
                             </li>
                             <li class="dropdown nav_menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tin tức <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
+                                <a href="#" class="dropdown-toggle">Tin tức <span class="caret"></span></a>
+                                @*<ul class="dropdown-menu">
                                     <li class="dropdown-header">
                                         <h3 class="text-uppercase">Tin tức</h3>
                                         Liên kết nhanh
                                     </li>
-                                    @*<li role="separator" class="divider"></li>
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>*@
-                                </ul>
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                </ul>*@
                             </li>
                             <li class="dropdown nav_menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Đóng góp <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
+                                <a href="#" class="@ViewBag.actived2">Đóng góp <span class="caret"></span></a>
+                                @*<ul class="dropdown-menu">
                                     <li class="dropdown-header">
                                         <h3 class="text-uppercase">Đóng góp</h3>
                                         Liên kết nhanh
                                     </li>
-                                    @*<li role="separator" class="divider"></li>
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>*@
-                                </ul>
+                                        <li><a href="#">Action</a></li>
+                                        <li><a href="#">Another action</a></li>
+                                        <li><a href="#">Something else here</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                </ul>*@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -132,29 +132,25 @@
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </form>
                             </li>
-                        </ul>  
-                        
+                        </ul>
+
                     </div>
                     <!-- /.navbar-collapse -->
 
                 </div>
                 <!-- /.container -->
             </nav>
-            <div id="sub_menu_nav">
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">Nội dung mới</a></li>
-                        <li><a href="#">Giới thiệu dự án xây trường</a></li>
-                    </ul>
-                </div>
-            </div>
+            @RenderSection("submenu", required: false)
+            
+
+            
         </div>
     </header>
-    
+
     <!-- Page Content -->
     @RenderBody()
-    
-    
+
+
     <!-- /.container -->
     <div id="footer">
         <div class="before_f">
@@ -164,27 +160,13 @@
                 <div class="row">
                     <div class="col-md-4 item_footer">
                         <h3>
-                            VĂN PHÒNG HIỂU VỀ TRÁI TIM
+                            CÔNG TY CỔ PHẦN 999999999 VIỆT NAM
                         </h3>
-                        <p>Số 145 Nam Kỳ Khởi Nghĩa, P.6, Q.3, TP. HCM</p>
-                        <p>Tel: (+84-8) 3601 6161 - 3933 9900</p>
-                        <p>HOTLINE : (+84) 908 342 176</p>
-                        <p>Email : info@hieuvetraitim.com</p>
+                        <p>SHOWROOM: TOÀ NHÀ TIMES TOWER - HACC1 COMPLEX BUILDING - ĐƯỜNG LÊ VĂN LƯƠNG - Q.THANH XUÂN - HÀ NỘI</p>
+                        <p>Hotline: 09.6789.9999 * 0.8888.56789 * 016.9999.6666 * Tel: 09.8181.3333 * Fax: 04.66.88.9999</p>
+                        <p>Email: 999999999jsc@gmail.vn</p>
                     </div>
                     <div class="col-md-4 item_footer">
-                        @*<h3>
-                            QUỸ HIỂU VỀ TRÁI TIM
-                        </h3>
-                        <ul class="footerMenu">
-                            <li><a href="#" class="i-footer-about-link">Giới thiệu</a></li>
-                            <li><a href="#" class="i-footer-about-link">Sơ đồ tổ chức</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Báo cáo tài chính</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Đồng hành</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Tình nguyện viên</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Đại sứ trái tim</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Nhà tài trợ</a></li>
-                            <li><a href="#" target="_blank" class="i-footer-about-link">Hiểu và thương</a></li>
-                        </ul>*@
                         <div class="footer_album sectionMarginTop">
                             <ul class="slides">
                                 <li>
@@ -199,20 +181,20 @@
                     </div>
                     <div class="col-md-4 item_footer">
                         <div class="uix_footer_columnWrapper">
-                            <h3>
-                                MXH HIỂU VỀ TRÁI TIM
-                            </h3>
-
-                            <ul class="footerMenu">
-                                <li><a href="#" class="i-footer-about-link">Đăng ký</a></li>
-                                <li><a href="#" class="i-footer-about-link">Danh mục</a></li>
-                                <li><a href="#" class="i-footer-about-link">Hồ sơ hoàn tất</a></li>
-                                <li><a href="#" class="i-footer-about-link">Kiểm tra đóng góp</a></li>
-                                <li><a href="#" class="i-footer-about-link">Diễn đàn</a></li>
-                                <li><a href="#" class="i-footer-about-link">Liên hệ</a></li>
-                                <li><a href="#" class="i-footer-about-link">Điều khoản &amp; Quy định</a></li>
-                                <li><a href="#" class="i-footer-about-link">Giúp đỡ</a></li>
-                            </ul>
+                            <p>
+                                Tài khoản VIETCOMBANK: 061.100.999.9999
+                            </p>
+                            <p>Tài khoản MB BANK: 001.10.999.999.999</p>
+                            @*<ul class="footerMenu">
+                                    <li><a href="#" class="i-footer-about-link">Đăng ký</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Danh mục</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Hồ sơ hoàn tất</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Kiểm tra đóng góp</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Diễn đàn</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Liên hệ</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Điều khoản &amp; Quy định</a></li>
+                                    <li><a href="#" class="i-footer-about-link">Giúp đỡ</a></li>
+                                </ul>*@
                         </div>
                     </div>
                 </div>
@@ -228,15 +210,15 @@
             </div>
         </footer>
     </div>
-   
+
     <div class="totop">
         <span class="fa fa-3x fa-angle-up" style="color: #d05127;"></span>
     </div>
 
     @*JS*@
-    
+
     @*js local*@
-   
+    <script src="~/Content/xaytruong/jquery.flexslider-min.js"></script>
     <script src="~/Content/xaytruong/js/scripts.js"></script>
     @RenderSection("scripts", required: false)
 </body>

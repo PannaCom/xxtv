@@ -158,6 +158,16 @@
           <Property Name="money" Type="numeric" Precision="18" Scale="0" />
           <Property Name="des" Type="ntext" />
         </EntityType>
+        <EntityType Name="web_link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="img" Type="nvarchar" MaxLength="500" />
+          <Property Name="link" Type="nvarchar" MaxLength="500" />
+          <Property Name="pos" Type="int" />
+        </EntityType>
         <EntityContainer Name="xaytruongModelStoreContainer">
           <EntitySet Name="daugia" EntityType="Self.daugia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="donors" EntityType="Self.donors" Schema="dbo" store:Type="Tables" />
@@ -173,6 +183,7 @@
           <EntitySet Name="pages_modules_pos" EntityType="Self.pages_modules_pos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="projects_fund" EntityType="Self.projects_fund" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="saoke" EntityType="Self.saoke" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="web_link" EntityType="Self.web_link" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -319,6 +330,7 @@
           <EntitySet Name="saokes" EntityType="Self.saoke" />
           <EntitySet Name="projects_fund" EntityType="xaytruongModel.projects_fund" />
           <EntitySet Name="donors" EntityType="xaytruongModel.donor" />
+          <EntitySet Name="web_link" EntityType="xaytruongModel.web_link" />
         </EntityContainer>
         <EntityType Name="projects_fund">
           <Key>
@@ -346,6 +358,16 @@
           <Property Name="total_money" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="img" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
           <Property Name="capacity" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="web_link">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="pos" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -515,6 +537,17 @@
                 <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="total_money" ColumnName="total_money" />
                 <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="web_link">
+            <EntityTypeMapping TypeName="xaytruongModel.web_link">
+              <MappingFragment StoreEntitySet="web_link">
+                <ScalarProperty Name="pos" ColumnName="pos" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="img" ColumnName="img" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

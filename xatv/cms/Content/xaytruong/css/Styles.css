@@ -201,7 +201,7 @@ a:hover, a:active {
 
 .actived {
     color: #fff;
-    background-color: #82B71F;
+    background-color: #82B71F!important;
 }
 
     .actived:hover {
@@ -213,21 +213,21 @@ a:hover, a:active {
     margin-bottom: 0;
 }
 
-#sub_menu_nav {
+.sub_menu_nav {
     background: #82B71F;
 }
 
-    #sub_menu_nav a {
+    .sub_menu_nav a {
         line-height: 6px;
         color: #fff;
     }
 
-        #sub_menu_nav a:hover {
-            background-color: #a3c949;
+        .sub_menu_nav a:hover {
+            background-color: #a3c949!important;
         }
 
 @media(min-width: 763px) {
-    #sub_menu_nav .container {
+    .sub_menu_nav .container {
         padding-left: 0;
         padding-right: 0;
     }

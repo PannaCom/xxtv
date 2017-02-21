@@ -110,5 +110,16 @@ namespace cms.Controllers
             return View();
         }
 
+        public ActionResult LoadLienKetWeb()
+        {
+            var data = (from p in db.web_link orderby p.pos ascending select p).ToList();
+            return PartialView("_LoadLienKetWeb", data);
+        }
+
+        public ActionResult donggop()
+        {
+            return View();
+        }
+
     }
 }

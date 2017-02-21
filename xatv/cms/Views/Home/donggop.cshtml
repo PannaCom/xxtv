@@ -1,0 +1,48 @@
+﻿@{
+    string url = Request.Url.Authority + HttpContext.Current.Request.RawUrl.ToString();
+    string host = Request.Url.Authority;
+    if (Request.ServerVariables["HTTPS"] == "on")
+    {
+        url = "https://" + url;
+        host = "https://" + host;
+    }
+    else
+    {
+        url = "http://" + url;
+        host = "http://" + host;
+    }
+
+}
+
+@{
+    ViewBag.Title = "Đóng góp quỹ xây trường | ";
+    ViewBag.Des = "Dự án từ thiện gây quỹ xây trường cho trẻ em vùng cao";
+    ViewBag.Keyword = "";
+    ViewBag.Author = "";
+    ViewBag.TypePage = "";
+    ViewBag.thumbnailUrl = "";
+    ViewBag.Url = url;
+    ViewBag.actived2 = "actived";
+    Layout = "~/Views/Shared/xaytruong/_Layout.cshtml";
+
+}
+
+@section submenu {
+    <div class="sub_menu_nav" id="home_menu">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Thành viên có nhiều hồ sơ nhất</a></li>
+                <li><a href="#">Thành viên được đóng góp nhiều nhất</a></li>
+            </ul>
+        </div>
+    </div>
+}
+
+
+<div id="content">
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+</div>
