@@ -310,6 +310,18 @@
             }, speed);
         }
 
+        var element2 = $('#article img').filter(function () {
+            //console.log($(this));
+            return document.getElementsByName('img');
+        }).addClass('img-responsive');
+
+        while (true) {
+            if (element2.is('img')) {
+                element2 = element2.addClass('img-responsive');
+            } else {
+                break;
+            }
+        }
 
 
     </script>
