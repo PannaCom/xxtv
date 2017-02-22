@@ -1,0 +1,47 @@
+﻿@model List<cms.Models.projects_fund>
+@using cms;
+
+@if (Model != null)
+{
+    if (Model.Count > 0)
+    {
+        <div class="section">
+            <div class="secondaryContent" id="moreProjectsByAuthor">
+                <h3><a href="#" class="concealed">Các dự án xây trường khác +</a></h3>
+
+                <div class="avatarList">
+                    <ul>
+
+                        @foreach (var item in Model)
+                        {
+                            string _linkitem = string.Format("/project/{0}-{1}", Config.unicodeToNoMark(item.name), item.id);
+                            <li class="project-32">
+                                <a href="@_linkitem" class="avatar NoOverlay">
+                                    <img src="@item.img" class="projectThumbnail" width="48" height="48">
+                                </a>
+
+                                <a href="@_linkitem">@item.name</a>
+
+                                <div>
+                                    @if (item.des != null)
+                                    {
+                                        if (item.des.Length > 66)
+                                        {
+                                            @item.des.Substring(0, 66)<span>...</span>
+                                        }
+                                        else
+                                        {
+                                            @item.des
+                                        }
+                                    }
+                                </div>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+}
+

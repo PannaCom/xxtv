@@ -17,7 +17,7 @@
     <meta property="og:title" content="@Html.Raw(ViewBag.Title)">
     <meta property="og:description" content="@Html.Raw(ViewBag.Des)">
     <meta property="og:image" itemprop="thumbnailUrl" content="@ViewBag.thumbnailUrl">
-
+    @RenderSection("metatag", required: false)
     <!-- Favicons
     ================================================== -->
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -77,7 +77,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="dropdown nav_menu">
-                                <a href="#" class="dropdown-toggle">Dự án xây trường <span class="caret"></span></a>
+                                <a href="#" class="@ViewBag.actived3">Dự án xây trường <span class="caret"></span></a>
                                 @*<ul class="dropdown-menu">
                                     <li class="dropdown-header">
                                         <h3 class="text-uppercase">Dự án xây trường</h3>

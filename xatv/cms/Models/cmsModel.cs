@@ -21,4 +21,15 @@ namespace cms.Models
         public Nullable<int> menu_id { get; set; }
         public Nullable<System.DateTime> date_time_dau_gia { get; set; }
     }
+
+    public class project_cat_vm
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string info { get; set; }
+        public string img { get; set; }
+        public string img2 { get; set; }
+        public int numProject { get; set; }
+    }
+
 }

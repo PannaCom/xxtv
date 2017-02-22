@@ -15,17 +15,17 @@
                 {
                     
                     int percent = (int)((item.money1 * 100) / item.money2);
-                    
+                    string _link = string.Format("/project/{0}-{1}", Config.unicodeToNoMark(item.name), item.id);
                     <div class="kh-col col-md-4 col-sm-6 col-xs-12">
                         <div class="kh-border">
                             <div class="kh-image">
-                                <a href="#" class="thumb-zoom">
+                                <a href="@_link" class="thumb-zoom">
                                     <img class="img-responsive" src="@item.img">
                                 </a>
                             </div>
                             <div class="kh-box">
                                 <div class="kh-title">
-                                    <a href="#">@item.name</a>
+                                    <a href="@_link">@item.name</a>
                                 </div>
                                 <div class="kh-content">
                                     @if (item.des.Length > 88)

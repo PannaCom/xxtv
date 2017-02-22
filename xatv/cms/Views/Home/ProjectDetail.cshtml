@@ -1,0 +1,318 @@
+﻿@model cms.Models.projects_fund
+@using cms;
+@{
+    string url = Request.Url.Authority + HttpContext.Current.Request.RawUrl.ToString();
+    string host = Request.Url.Authority;
+    if (Request.ServerVariables["HTTPS"] == "on")
+    {
+        url = "https://" + url;
+        host = "https://" + host;
+    }
+    else
+    {
+        url = "http://" + url;
+        host = "http://" + host;
+    }
+
+}
+
+@{
+    ViewBag.Title = "Dự án ";
+    ViewBag.Des = "Dự án ";
+    ViewBag.Keyword = "";
+    ViewBag.Author = "";
+    ViewBag.TypePage = "";
+    ViewBag.thumbnailUrl = "";
+    ViewBag.actived2 = "actived";
+    ViewBag.Url = url;
+    Layout = "~/Views/Shared/xaytruong/_Layout.cshtml";
+
+}
+
+@section metatag {
+    <meta property="fb:admins" content="100014446952315" />
+    <meta property="fb:app_id" content="1027935717306021" />
+}
+
+@section submenu {
+    <div class="sub_menu_nav" id="home_menu">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Thành viên có nhiều hồ sơ nhất</a></li>
+                <li><a href="#">Thành viên được đóng góp nhiều nhất</a></li>
+            </ul>
+        </div>
+    </div>
+}
+<script src="/Content/xaytruong/js/jquery.countdown.min.js"></script>
+
+
+
+@if (Model != null)
+{
+
+    string title = @Model.name;
+    ViewBag.Title += title;
+    ViewBag.Des += title;
+    string cat_name = ViewBag.cat_name;
+    string _linkcat = string.Format("/projects/categories/{0}-{1}", Config.unicodeToNoMark(cat_name), Model.project_cat);
+    int percent = (int)((Model.money1 * 100) / Model.money2);
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    decimal? sotiendu = Model.money2 - Model.money1;
+    
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1027935717306021";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+    <div id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <ol class="breadcrumb xt_breadcrumb">
+                        <li><a href="#">Đóng góp</a></li>
+                        <li class="active"><a href="@_linkcat">@ViewBag.cat_name</a></li>
+                        @*<li class="active">@Model.name</li>*@
+                    </ol>
+                    <div class="project_container">
+
+                        <div class="projectInfo page-header">
+                            <h1>@Model.name</h1>
+                        </div>
+
+                        <ol class="tabs" style="border-top: 0;">
+                            <li class="tab_active">
+                                <a href="#tab_info" class="tab_click">Giới thiệu</a>
+                            </li>
+                            <li>
+                                <a href="#tab_comment" class="tab_click">Bình luận</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#tab_donars" class="tab_click">Nhà hảo tâm <span class="badge">3</span></a>
+                            </li>
+                        </ol>
+
+                        @*<ul class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#tab_info" class="tab_click">Giới thiệu</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#tab_comment" class="tab_click">Bình luận</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#tab_donars" class="tab_click">Nhà hảo tâm <span class="badge">3</span></a>
+                            </li>
+                        </ul>*@
+
+
+                        <div class="innerContent" id="tab_info">
+                            <div class="projectOverview">
+                                <div class="thumbnail image">
+                                    <img src="@Model.img">
+                                </div>
+
+                                <div class="tagLine">@Model.info.</div>
+                                <span class="tipdown"></span>
+                            </div>
+
+                            <div class="projectAuthor">
+                                <div>
+                                    <span class="logo" style="background-image: url('/images/xaytruong.png');"></span>
+                                    <div class="info">
+                                        <p><a href="#" class="username NoOverlay" dir="auto">Quản trị</a></p>
+                                        <p>Ngày khởi tạo: <span class="DateTime" html="true" title="@string.Format("{0:dd/MM/yyyy}", @Model.date_init)">@string.Format("{0:dd/MM/yyyy}", @Model.date_init)</span></p>
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <p><i class="fa fa-calendar-check-o category"></i><a href="@_linkcat">@ViewBag.cat_name</a></p>
+                                </div>
+                            </div>
+
+                            <div class="updateContainer section">
+                                <article id="article">
+                                    @Html.Raw(Model.des_detail)
+                                </article>
+                            </div>
+
+                        </div>
+
+
+                        <div id="tab_comment" class="innerContent">
+                            <h3 style="margin-top: 20px;font-size: 19px;">Bình luận</h3>
+                            <div id="fb_page">
+                                <div class="fb-comments" data-href="@url" data-numposts="5"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4" style="float: right;">
+                    <div class="sidebar">
+                        <div class="section fundingStatistic secondaryContent2">
+                            <div class="balance">
+                                <span class="currency">
+                                    <span>@String.Format(info, "{0:#,##}", Model.money1)</span><em>đ</em>
+                                </span>
+                            </div>
+                            <div class="fundedText">Đã góp được:</div>
+                            @*<div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;">
+                                    <span class="sr-only">@percent% Complete</span>
+                                </div>
+                            </div>*@
+                            <div class="percent">
+                                <div class="complete" style="width: @string.Format("{0}px;", percent)"></div>
+                            </div>
+                            <div class="bottom">
+                                <div style="float: left;">@percent% x (@String.Format(info, "{0:#,##}", Model.money2) đ)</div>
+                                <div style="float: right;" class="clock-day" data-clock="@string.Format("{0:yyyy/MM/dd}", Model.date_init)"></div>
+                            </div>
+
+                            <div class="fundingGoalText">Số tiền cần góp:</div>
+                            <div class="fundingGoal"><i class="fa fa-flag-o"></i><span>@String.Format(info, "{0:#,##}", Model.money2) đ</span></div>
+
+                            
+                        </div>
+
+
+                        <div class="section fundingStatistic secondaryContent2" style="border-top: 0 none;margin-top: -20px;">
+
+
+                            <div class="section">
+                                <div class="" id="donationBox">
+
+                                    <form action="/Home/donggop" method="POST" class="donate">
+                                        <p>Số tiền đóng góp (đ)</p>
+                                        <ul>
+                                            <li class="preset">
+                                                <label for="donate_amount_50000">
+                                                    <input type="radio" name="amount" value="50000" checked="checked" id="donate_amount_50000">
+                                                    50.000
+                                                </label>
+                                            </li>
+
+                                            <li class="preset">
+                                                <label for="donate_amount_100000">
+                                                    <input type="radio" name="amount" value="100000" id="donate_amount_100000">
+                                                    100.000
+                                                </label>
+                                            </li>
+
+                                            <li class="preset">
+                                                <label for="donate_amount_200000">
+                                                    <input type="radio" name="amount" value="200000" id="donate_amount_200000">
+                                                    200.000
+                                                </label>
+                                            </li>
+
+                                            <li class="preset">
+                                                <label for="donate_amount_500000">
+                                                    <input type="radio" name="amount" value="500000" id="donate_amount_500000">
+                                                    500.000
+                                                </label>
+                                            </li>
+
+                                            <li class="preset">
+                                                <label for="donate_amount_1000000">
+                                                    <input type="radio" name="amount" value="1000000" id="donate_amount_1000000">
+                                                    1.000.000
+                                                </label>
+                                            </li>
+
+                                            <li class="preset">
+                                                <label for="donate_amount_2000000">
+                                                    <input type="radio" name="amount" value="2000000" id="donate_amount_2000000">
+                                                    2.000.000
+                                                </label>
+                                            </li>
+
+
+
+                                            <li class="other">
+                                                <label for="donate_amount_remain">
+                                                    <input type="radio" name="amount" value="@String.Format(info, "{0:#,##}", sotiendu)" id="donate_amount_remain">
+
+                                                    Toàn bộ số tiền còn lại (@String.Format(info, "{0:#,##}", sotiendu) đ)
+                                                </label>
+                                            </li>
+
+
+                                            <li class="other">
+                                                <label for="donate_amount_other">
+                                                    <input type="radio" name="amount" value="0" id="donate_amount_other">
+                                                    <input type="text" name="other_amount" value="" class="textCtrl" placeholder="Số tiền tự chọn">
+                                                </label>
+                                            </li>
+
+
+
+                                            <li class="buttons">
+                                                <button class="btn btn-primary btn-block">Đóng góp</button>
+                                            </li>
+
+                                            @*<li style="text-align: center; margin-top: 5px;">
+                                                <img src="styles/Tinhte/eProjects/hotline.png" style="border: 0 none; max-width: 100%; width: 140px;">
+                                            </li>*@
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        @{Html.RenderAction("LoadProjectAnother", new { id = Model.id });}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tab_click').click(function (e) {
+                // prevent default action
+                e.preventDefault();
+                $(this).parent('li').addClass('tab_active');
+                $(this).parent('li').siblings('li').removeClass('tab_active');
+                // get id of target div (placed in href attribute of anchor element)
+                // and pass it to the scrollToElement function
+                // also, use 2000 as an argument for the scroll speed (2 seconds, 2000 milliseconds)
+                scrollToElement($(this).attr('href'), 2000);
+            });
+
+
+            //$('.updateContainer').children('article').filter('img').addClass('img-responsive');
+            //setTimeout(function () {
+            //    $('#article').filter(document.getElementsByName('img')).addClass('x');
+            //}, 2000)
+            getDayLeft("div.clock-day", $('div.clock-day').data('clock'));
+
+        });
+
+        var scrollToElement = function (el, ms) {
+            var speed = (ms) ? ms : 600;
+            $('html,body').animate({
+                scrollTop: $(el).offset().top
+            }, speed);
+        }
+
+
+
+    </script>
+
+    
+}

@@ -121,5 +121,79 @@ namespace cms.Controllers
             return View();
         }
 
+        public ActionResult ProjectDetail(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            projects_fund project = db.projects_fund.Find(id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            // load tên danh mục:
+            var cat = db.project_cat.Find(project.project_cat);
+            if (cat != null)
+            {
+                ViewBag.cat_name = cat.name;
+            }
+            return View(project);
+        }
+
+        public ActionResult ProjectCat(int? id, int? pg, string orderby)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var projects = db.projects_fund.Where(x => x.project_cat == id).Select(x => x);
+            if (projects == null)
+            {
+                return HttpNotFound();
+            }
+
+            int pageSize = 18;
+            if (pg == null) pg = 1;
+            int pageNumber = (pg ?? 1);
+            ViewBag.pg = pg;
+
+            if (orderby == null) orderby = "";
+            if (orderby != null && orderby != "")
+            {
+                projects = projects.Where(x => x.orderby == orderby);
+                ViewBag.orderby = orderby;
+            }
+
+            // load tên danh mục:
+            var cat = db.project_cat.Find(id);
+            if (cat != null)
+            {
+                ViewBag.catmodel = cat;
+            }
+
+            return View(projects.ToList().ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult LoadProjectCat()
+        {
+            var data = (from c in db.project_cat
+                       select new project_cat_vm()
+                       {
+                           id = c.id,
+                           img = c.img,
+                           img2 = c.img2,
+                           info = c.info,
+                           name = c.name,
+                           numProject = db.projects_fund.Where(x => x.project_cat == c.id).Count()
+                       }).ToList();
+            return PartialView("_LoadProjectCat", data);
+        }
+        public ActionResult LoadProjectAnother(int? id)
+        {
+            var data = (from p in db.projects_fund where p.id != id orderby p.date_init descending select p).Take(5).ToList();
+            return PartialView("_LoadProjectAnother", data);
+        }
+
     }
 }

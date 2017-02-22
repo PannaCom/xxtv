@@ -132,21 +132,33 @@
           <Property Name="pos" Type="tinyint" />
           <Property Name="order_no" Type="int" />
         </EntityType>
+        <EntityType Name="project_cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="505" />
+          <Property Name="info" Type="nvarchar" MaxLength="505" />
+          <Property Name="img" Type="nvarchar" MaxLength="505" />
+          <Property Name="img2" Type="nvarchar" MaxLength="505" />
+        </EntityType>
         <EntityType Name="projects_fund">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="name" Type="nvarchar" MaxLength="505" />
           <Property Name="des" Type="nvarchar" MaxLength="505" />
           <Property Name="money1" Type="numeric" Precision="18" Scale="0" />
           <Property Name="money2" Type="numeric" Precision="18" Scale="0" />
           <Property Name="img" Type="nvarchar" MaxLength="505" />
           <Property Name="date_init" Type="datetime" />
           <Property Name="project_cat" Type="int" />
-          <Property Name="orderby" Type="int" />
+          <Property Name="orderby" Type="nvarchar" MaxLength="150" />
           <Property Name="provinces" Type="nvarchar" MaxLength="250" />
           <Property Name="authorid" Type="bigint" />
+          <Property Name="info" Type="ntext" />
+          <Property Name="des_detail" Type="ntext" />
         </EntityType>
         <EntityType Name="saoke">
           <Key>
@@ -181,6 +193,7 @@
           <EntitySet Name="news_item_menu" EntityType="Self.news_item_menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pages" EntityType="Self.pages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pages_modules_pos" EntityType="Self.pages_modules_pos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="project_cat" EntityType="Self.project_cat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="projects_fund" EntityType="Self.projects_fund" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="saoke" EntityType="Self.saoke" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="web_link" EntityType="Self.web_link" Schema="dbo" store:Type="Tables" />
@@ -328,26 +341,11 @@
           <EntitySet Name="pages" EntityType="Self.page" />
           <EntitySet Name="pages_modules_pos" EntityType="Self.pages_modules_pos" />
           <EntitySet Name="saokes" EntityType="Self.saoke" />
-          <EntitySet Name="projects_fund" EntityType="xaytruongModel.projects_fund" />
           <EntitySet Name="donors" EntityType="xaytruongModel.donor" />
           <EntitySet Name="web_link" EntityType="xaytruongModel.web_link" />
+          <EntitySet Name="project_cat" EntityType="xaytruongModel.project_cat" />
+          <EntitySet Name="projects_fund" EntityType="xaytruongModel.projects_fund" />
         </EntityContainer>
-        <EntityType Name="projects_fund">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="des" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
-          <Property Name="money1" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="money2" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="img" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
-          <Property Name="date_init" Type="DateTime" Precision="3" />
-          <Property Name="project_cat" Type="Int32" />
-          <Property Name="orderby" Type="Int32" />
-          <Property Name="provinces" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="authorid" Type="Int64" />
-        </EntityType>
         <EntityType Name="donor">
           <Key>
             <PropertyRef Name="id" />
@@ -368,6 +366,34 @@
           <Property Name="img" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="pos" Type="Int32" />
+        </EntityType>
+        <EntityType Name="project_cat">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="info" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="img" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="img2" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="projects_fund">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="des" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="money1" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="money2" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="img" Type="String" MaxLength="505" FixedLength="false" Unicode="true" />
+          <Property Name="date_init" Type="DateTime" Precision="3" />
+          <Property Name="project_cat" Type="Int32" />
+          <Property Name="orderby" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="provinces" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="authorid" Type="Int64" />
+          <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="des_detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -513,23 +539,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="projects_fund">
-            <EntityTypeMapping TypeName="xaytruongModel.projects_fund">
-              <MappingFragment StoreEntitySet="projects_fund">
-                <ScalarProperty Name="authorid" ColumnName="authorid" />
-                <ScalarProperty Name="provinces" ColumnName="provinces" />
-                <ScalarProperty Name="orderby" ColumnName="orderby" />
-                <ScalarProperty Name="project_cat" ColumnName="project_cat" />
-                <ScalarProperty Name="date_init" ColumnName="date_init" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="money2" ColumnName="money2" />
-                <ScalarProperty Name="money1" ColumnName="money1" />
-                <ScalarProperty Name="des" ColumnName="des" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="donors">
             <EntityTypeMapping TypeName="xaytruongModel.donor">
               <MappingFragment StoreEntitySet="donors">
@@ -548,6 +557,36 @@
                 <ScalarProperty Name="pos" ColumnName="pos" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="project_cat">
+            <EntityTypeMapping TypeName="xaytruongModel.project_cat">
+              <MappingFragment StoreEntitySet="project_cat">
+                <ScalarProperty Name="img2" ColumnName="img2" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="projects_fund">
+            <EntityTypeMapping TypeName="xaytruongModel.projects_fund">
+              <MappingFragment StoreEntitySet="projects_fund">
+                <ScalarProperty Name="des_detail" ColumnName="des_detail" />
+                <ScalarProperty Name="info" ColumnName="info" />
+                <ScalarProperty Name="authorid" ColumnName="authorid" />
+                <ScalarProperty Name="provinces" ColumnName="provinces" />
+                <ScalarProperty Name="orderby" ColumnName="orderby" />
+                <ScalarProperty Name="project_cat" ColumnName="project_cat" />
+                <ScalarProperty Name="date_init" ColumnName="date_init" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="money2" ColumnName="money2" />
+                <ScalarProperty Name="money1" ColumnName="money1" />
+                <ScalarProperty Name="des" ColumnName="des" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

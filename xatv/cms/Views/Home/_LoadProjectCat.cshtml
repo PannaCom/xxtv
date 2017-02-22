@@ -1,0 +1,26 @@
+﻿@model List<cms.Models.project_cat_vm>
+@using cms;
+
+@if (Model != null)
+{
+    if (Model.Count > 0)
+    {
+        <div class="secondaryContent categoryList">
+            <h3>Danh mục</h3>
+            <ol>
+
+                @foreach (var item in Model)
+                {
+                    string _linkcat = string.Format("/projects/categories/{0}-{1}", Config.unicodeToNoMark(item.name), item.id);
+                    <li class="">
+                        <a href="@_linkcat" class="Tooltip" data-toggle="tooltip" data-placement="bottom" title="@item.info">@item.name</a>
+                        <span class="count">@string.Format("{0:#,###}", item.numProject)</span>
+                    </li>
+                }
+                
+
+            </ol>
+        </div>
+    }
+}
+

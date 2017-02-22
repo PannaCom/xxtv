@@ -18,6 +18,19 @@ namespace cms
                 "news/{title}-{id}",
                 new { controller = "News", action = "Details", title = UrlParameter.Optional, id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                "projectdetail",
+                "project/{title}-{id}",
+                new { controller = "Home", action = "ProjectDetail", title = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                "projectcat",
+                "projects/categories/{title}-{id}",
+                new { controller = "Home", action = "ProjectCat", title = UrlParameter.Optional, id = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
