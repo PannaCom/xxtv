@@ -357,12 +357,14 @@ a {
 #maincontainer .widget > h3 {
     font-size: 12pt;
     font-weight: bold;
+            margin-bottom: 10px;
 }
 
 #panel_project > h3,
 #panel_project > h3 > a {
     color: rgb(71, 130, 23);
     _font-weight: normal !important;
+
 }
 
 .kh-donggop {
