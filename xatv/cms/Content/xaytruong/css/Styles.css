@@ -1376,3 +1376,9 @@ select, input, button, textarea, button {
 .cat_active a {
     font-weight: 600;
 }
+
+.LbImage {
+	display: block;
+    max-width: 100%;
+    height: auto;
+}
