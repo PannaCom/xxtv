@@ -1,74 +1,115 @@
 ﻿@model PagedList.IPagedList<cms.Models.projects_fund>
-@using PagedList.Mvc; 
+@using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Thống kê dự án";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<!-- Navigation -->
-        @Html.Partial("~/Views/_vMenu.cshtml")
-<div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Danh sách dự án</h1>
-                </div>
-                <!-- /.col-lg-12 -->
+
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+
+
+<div id="wrapper">
+    <!-- Navigation -->
+    @Html.Partial("~/Views/_vMenu.cshtml")
+
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Danh sách dự án</h1>
             </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <a href="/Projects/Create" class="fll" style="float:right;">Thêm mới</a>                            
-                            <input name="name" type="text" id="name" value="@ViewBag.name" class="form-control fll"  onkeyup="searchAuto();"/>                                  
-                            <button type="button" class="btn btn-default" onclick="search();">Tìm kiếm</button>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="dataTable_wrapper">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Tên dự án</th>
-                                            <th>Số tiền đã huy động</th>
-                                            <th>Số tiền cần huy động</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr class="odd gradeX">
-                                                <td>@item.name</td>
-                                                <td>@String.Format("{0:#,##0}", item.money1)</td>
-                                                <td>@String.Format("{0:#,##0}", item.money2)</td>
-                                                <td><a href="/Projects/Edit/@item.id">Sửa</a>-<a href="/Projects/Delete/@item.id">Xóa</a></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 style="margin-top: 0;">
+                    <a href="/Projects/Create" class="fll btn btn-primary">Thêm mới</a>
+                </h1>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form action="/Projects/Index" class="form-inline" method="get" enctype="multipart/form-data" id="form-search">
+                            <div class="form-group">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nhập từ khóa tìm kiếm" />
                             </div>
-                            
-                        </div>
-                        <!-- /.panel-body -->
+                            <button class="btn btn-primary">Tìm kiếm</button>
+                        </form>
                     </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-                <div class="col-lg-12">
-                    <ul class="pagination clearfix">
-                            <li class="disabled"><a href="#">«</a></li>
-                            @for (int i = 1; i <= Model.PageCount; i++)
-                            { 
-                                 <text><li><a href="/news/Index?name=@ViewBag.name&page=@i">@i</a></li></text>
-                            }
-                    </ul>
-                </div>
+
+                @if (Model != null)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>##ID</th>
+                                    <th>Tên dự án</th>
+                                    <th>Số tiền đã huy động</th>
+                                    <th>Số tiền cần huy động</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày kết thúc</th>
+                                    <td>Trạng thái</td>
+                                    <td>Chức năng</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>#@item.id</td>
+                                            <td>@item.name</td>
+                                            <td>@String.Format(info, "{0:#,##} đồng.", item.money1)</td>
+                                            <td>@String.Format(info, "{0:#,##} đồng.", item.money2)</td>
+                                            <td>@String.Format("{0: dd/MM/yyyy}", item.date_init)</td>
+                                            <td>@String.Format("{0: dd/MM/yyyy}", item.date_finish)</td>
+                                            <td>
+                                                @if (item.orderby == "funding")
+                                                {
+                                                    <span>Đang đóng góp</span>
+                                                }
+                                                else if (item.orderby == "completed")
+                                                {
+                                                    <span>Đã hoàn tất</span>
+                                                }
+                                                else if (@item.orderby == "needmuch")
+                                                {
+                                                    <span>Cần tài trợ nhiều</span>
+                                                }
+                                                else if (item.orderby == "goingtocompleted")
+                                                {
+                                                    <span>Gần đạt được</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Ngày cuối</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="/projects/edit/@item.id" class="btn btn-primary">Sửa</a>
+                                                <a href="/projects/delete/@item.id" class="btn btn-danger delete_project" data-id="@item.id">Xóa</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", "Project", new { pg = page, name = ViewBag.name }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                }
+
             </div>
-            
+
         </div>
         <!-- /#page-wrapper -->
-<script>
-    function search() {
-        window.location.href = "/Projects/Index?name=" + document.getElementById("name").value;
-    }
-</script>
+    </div>
+
+</div>

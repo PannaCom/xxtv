@@ -40,9 +40,24 @@ namespace cms
                         "~/Content/themes/base/jquery.ui.theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/dropzone").Include(
-                    "~/Scripts/dropzone/dropzone.min.css"
+                    "~/Scripts/dropzone/dropzone.css"
                 ));
 
+            bundles.Add(new StyleBundle("~/Content/alertify").Include(
+                    "~/Content/alertify.core.css",
+                    "~/Content/alertify.default.css",
+                    "~/Content/alertify.bootstrap.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/themes/admin/dist/css/sb-admin-2").Include(
+                    "~/Content/themes/admin/dist/css/sb-admin-2.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/themes/admin/dist/js/sb-admin-2").Include(
+                    "~/Content/themes/admin/dist/js/sb-admin-2.js"
+                ));
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

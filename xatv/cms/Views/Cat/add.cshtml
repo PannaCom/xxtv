@@ -32,7 +32,7 @@
                 <a href="/cat/index" class="btn btn-primary">Quay lại danh mục</a>
                 
                 <form class="form-horizontal" method="post" id="form_cat_add" name="form_cat_add" enctype="multipart/form-data">
-                    <input type="hidden" name="cat_id" id="cat_id" value="" />
+                    <input type="hidden" name="cat_id" id="cat_id" value="0" />
                     <div class="form-group">
                         <div class="col-md-12">
                             <label class="control-label">Tên danh mục: </label>
@@ -42,32 +42,33 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                          <label class="control-label">Mô tả danh mục: </label>
+                            <label class="control-label">Mô tả danh mục: </label>
                             <textarea name="cat_info" id="cat_info" class="form-control" placeholder="Mô tả danh mục" rows="5"></textarea>
-                            
+
                         </div>
-          
+
                     </div>
                     <div class="form-group">
                         <div class="col-md-6">
                             <label class="control-label">Ảnh đại diện </label>
-                            
+                            <input type="hidden" name="incat_img1" id="incat_img1" />
                             <div class="cat_img">
-                                <img id="cat_img1" src="" style="width: 200px; height: 200px;" />
+                                <img id="cat_img1" src="" data-src="" style="width: 200px; height: 200px;" />
                             </div>
                             <div id="ul_cat_img1" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
                                 <div class="dz-default dz-message" data-dz-message style="margin: 0;">
                                     <span><i class="fa fa-plus fa-2x"></i> Tải ảnh lên.</span>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div class="col-md-6">
                             <label class="control-label">Ảnh nền: </label>
-                            <input type="hidden" name="cat_img2" id="cat_img2" />
+                            @*<input type="hidden" name="cat_img2" id="cat_img2" />*@
+                            <input type="hidden" name="incat_img2" id="incat_img2" />
                             <div class="cat_img">
-                                <img id="cat_img2" src="" style="width: 100%; height: 200px;" />
+                                <img id="cat_img2" src="" data-src="" style="width: 100%; height: 200px;" />
                             </div>
                             <div id="ul_cat_img2" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
                                 <div class="dz-default dz-message" data-dz-message style="margin: 0;">
@@ -75,11 +76,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                    
-                   <button type="button" class="btn btn-primary" id="btn_cat_add" onclick="cat_save(event);">Cập nhật</button>
-                    
+
+                    <button type="button" class="btn btn-primary" id="btn_cat_add" onclick="cat_save(event);">Cập nhật</button>
+
                 </form>
 
             </div>
@@ -118,7 +119,8 @@
                     var imgPath = response.Message;
                     if (imgPath !== "") {
                         this.removeFile(file);
-                        $('#cat_img1').attr('src', imgPath);
+                        $('#cat_img1').attr({ 'src': imgPath, 'data-src': imgPath });
+                        $('#incat_img1').val(imgPath);
                     }
                 },
                 error: function (file, response) {
@@ -149,7 +151,8 @@
                     if (imgPath !== "") {
                         //file.previewElement.classList.add("dz-success");
                         this.removeFile(file);
-                        $('#cat_img2').attr('src', imgPath);
+                        $('#cat_img2').attr({ 'src': imgPath, 'data-src': imgPath });
+                        $('#incat_img2').val(imgPath);
                     }
                 },
                 error: function (file, response) {
@@ -164,6 +167,72 @@
             var up2 = new Dropzone("div#ul_cat_img2", optiondr2);
 
         })
+
+        function cat_save(e) {
+            e.preventDefault();
+            if (document.getElementById("cat_name").value === "") {
+                toastr.warning('Vui lòng nhập tên danh mục!')
+                document.getElementById("cat_name").focus();
+                return false;
+            }
+            if (document.getElementById("cat_info").value === "") {
+                toastr.warning('Vui lòng nhập mô tả!')
+                document.getElementById("cat_info").focus();
+                return false;
+            }
+            if (document.getElementById("incat_img1").value === "") {
+                toastr.warning('Vui lòng nhập ảnh đại diện!')
+                $('#cat_img1').css('border', '1px solid');
+                $('#cat_img1').focus();
+                return false;
+            } else {
+                $('#cat_img1').css('border', '0');
+            }
+
+            if (document.getElementById("incat_img2").value === "") {
+                toastr.warning('Vui lòng nhập ảnh nền!')
+                $('#cat_img2').css('border', '1px solid');
+                $('#cat_img2').focus();
+                return false;
+            } else {
+                $('#cat_img2').css('border', '0');
+            }
+
+            var dataadd = {
+                id: document.getElementById("cat_id").value,
+                name: document.getElementById("cat_name").value,
+                info: document.getElementById("cat_info").value,
+                img: document.getElementById("incat_img1").value,
+                img2: document.getElementById("incat_img2").value
+            }
+            $('#btn_cat_add').html("Đang cập nhật danh mục...");
+            document.getElementById("btn_cat_add").disabled = true;
+            $.ajax({
+                url: '/cat/add',
+                data: dataadd,
+                method: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        //console.log(data);
+                        document.getElementById("cat_id").value = data.id;
+                        document.getElementById("cat_name").value = data.name;
+                        document.getElementById("cat_info").value = data.info;
+                        document.getElementById("incat_img1").value = data.img;
+                        document.getElementById("incat_img2").value = data.img2;
+                        $('#cat_img1').attr({ 'src': data.img, 'data-src': data.img });
+                        $('#cat_img2').attr({ 'src': data.img2, 'data-src': data.img2 });
+                        toastr.success('Đã cập nhật danh mục!', 'Thông báo');                        
+                    }
+                    $('#btn_cat_add').html("Cập nhật");
+                    document.getElementById("btn_cat_add").disabled = false;
+                },
+                error: function () {
+                    toastr.warning('Máy chủ quá tải, vui lòng thử lại sau!');
+                }
+            })
+
+        }
 
     </script>
 

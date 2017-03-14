@@ -23,14 +23,16 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a href="/cat/add" class="btn btn-primary">Thêm danh mục dự án</a>
+                <h1 style="margin-top: 0;">
+                    <a href="/cat/add" class="btn btn-primary">Thêm danh mục dự án</a><br />
+                </h1>
                 @if (Model != null)
                 {                    
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>#ID</th>
+                                    <th>##ID</th>
                                     <th>Tên danh mục</th>
                                     <th>Mô tả</th>
                                     <th>Ảnh đại diện</th>
@@ -51,7 +53,7 @@
                                             <td><img style="width: 200px;" src="@item.img2" /></td>
                                             <td>
                                                 <a href="/cat/edit/@item.id" class="btn btn-primary">Sửa</a>
-                                                <a href="/cat/delete/@item.id" class="btn btn-danger">Xóa</a>
+                                                <a href="/cat/delete/@item.id" class="btn btn-danger delete_cat" data-id="@item.id">Xóa</a>
                                             </td>
                                         </tr>
                                     }
@@ -74,5 +76,41 @@
 
 @section scripts {
 
+    <script>
+        $(document).ready(function () {
+            $('.delete_cat').on('click', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var $row = $(this).closest('tr');
+                reset();
+                alertify.confirm("Bạn chắc chắn muốn xóa danh mục này?", function (e) {
+                    if (e) {                        
+                        $.ajax({
+                            url: '/cat/delete',
+                            data: {id: id},
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+                                    if (data == "1") {
+                                        $row.remove();
+                                        alertify.success("Bạn đã xóa danh mục thành công.");
+                                    }
+                                }
+                            },
+                            error: function () {
+                                toastr.warning('Máy chủ quá tải, vui lòng thử lại sau!');
+                            }
+                        })
+                        
+                    } else {
+                        alertify.error("Bạn đã hủy xóa");
+                    }
+                });
+                return false;
+            })
+        })
+        
+    </script>
 
 } 

@@ -1,4 +1,4 @@
-$(function() {
+﻿$(function() {
 
     $('#side-menu').metisMenu();
 
@@ -44,4 +44,16 @@ function hideLoadingImage() {
 function formatCurrency(number) {
     if (number == null || number == "") return 0;
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function reset() {
+    alertify.set({
+        labels: {
+            ok: "Đồng ý",
+            cancel: "Hủy bỏ"
+        },
+        delay: 5000,
+        buttonReverse: false,
+        buttonFocus: "ok"
+    });
 }

@@ -27,5 +27,7 @@ namespace cms.Models
         public Nullable<long> authorid { get; set; }
         public string info { get; set; }
         public string des_detail { get; set; }
+        public Nullable<int> view_count { get; set; }
+        public Nullable<System.DateTime> date_finish { get; set; }
     }
 }

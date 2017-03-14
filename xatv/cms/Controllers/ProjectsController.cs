@@ -16,14 +16,15 @@ namespace cms.Controllers
         //
         // GET: /Projects/
 
-        public ActionResult Index(string name, int? page)
+        public ActionResult Index(string name, int? pg)
         {
+            if (Config.getCookie("editor") == "") { return RedirectToAction("Login", "Admin"); }
             //return View(db.provinces.Where(o=>o.deleted==0).OrderBy(o=>o.country_id).ThenBy(o=>o.name).ToList());
             if (name == null) name = "";
             ViewBag.name = name;
-            var p = (from q in db.projects_fund where q.name.Contains(name) select q).OrderByDescending(o => o.id).Take(100);
+            var p = (from q in db.projects_fund where q.name.Contains(name) orderby q.id descending select q);
             int pageSize = 25;
-            int pageNumber = (page ?? 1);
+            int pageNumber = (pg ?? 1);
             return View(p.ToPagedList(pageNumber, pageSize));
         }
 
@@ -45,6 +46,7 @@ namespace cms.Controllers
 
         public ActionResult Create()
         {
+            if (Config.getCookie("editor") == "") { return RedirectToAction("Login", "Admin"); }
             return View();
         }
 

@@ -1,80 +1,125 @@
 ﻿@model cms.Models.projects_fund
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm dự án mới";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
 <h2>Thêm mới dự án</h2>
-
-<script src="/Scripts/ckeditor/ckeditor.js"></script>
-<div id="wrapper">
-        <!-- Navigation -->
-        @Html.Partial("~/Views/_vMenu.cshtml")
-        <!-- Page Content -->
-        <div id="page-wrapper">
-
-@using (Html.BeginForm("Create", "Projects", FormMethod.Post, new { id = "EditForm" })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-       
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Tên dự án</label>
-                <input name="name" type="text" id="name" value="" class="form-control" placeholder="Gõ tiêu đề"/>                
-        </div>
-
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Số tiền đã huy động</label>
-                <input name="money1" type="text" id="money1" value="" class="form-control" placeholder="Số tiền đã huy động"/>                
-        </div>
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Số tiền cần huy động</label>
-                <input name="money2" type="text" id="money2" value="" class="form-control" placeholder="Số tiền cần huy động"/>                
-        </div>
-        <p>
-            <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
- </div>
-        <!-- /#page-wrapper -->        
-    </div>
-<script>
-    function checkField() {
-
-
-        if (document.getElementById("name").value == "") {
-            alert("Nhập tên dự án!");
-            document.getElementById("name").focus();
-            return false;
-        }
-
-        if (document.getElementById("money1").value == "") {
-            alert("Nhập số tiền đã huy động!");
-            document.getElementById("money1").focus();
-            return false;
-        }
-        if (document.getElementById("money2").value == "") {
-            alert("Nhập số tiền cần huy động!");
-            document.getElementById("money2").focus();
-            return false;
-        }
-        if (isNaN(document.getElementById("money1").value)) {
-            alert("Nhập số tiền đã huy động!");
-            document.getElementById("money1").focus();
-            return false;
-        }
-        if (isNaN(document.getElementById("money2").value)) {
-            alert("Nhập số tiền cần huy động!");
-            document.getElementById("money2").focus();
-            return false;
-        }
-        document.getElementById("EditForm").submit();
+<style>
+    .dropzone .dz-preview.dz-image-preview {
+        margin-top: -150px;
     }
+</style>
+
+<div id="wrapper">
+    <!-- Navigation -->
+    @Html.Partial("~/Views/_vMenu.cshtml")
+    <!-- Page Content -->
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="/projects/index" class="btn btn-primary">Quay lại danh mục</a>
+
+                <form class="form-horizontal" method="post" id="form_project_add" name="form_project_add" enctype="multipart/form-data">
+                    <input type="hidden" name="project_id" id="project_id" value="0" />
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label class="control-label">Tên dự án: </label>
+                            <input type="text" name="project_name" id="project_name" class="form-control" placeholder="Tên dự án" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label class="control-label">Mô tả danh mục: </label>
+                            <textarea name="project_des" id="project_des" class="form-control" placeholder="Mô tả dự án" rows="5"></textarea>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            
+                            <label class="control-label">Chi tiết</label>
+                            <div id="ul_cat_img2" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
+                                <div class="dz-default dz-message" data-dz-message style="margin: 0;">
+                                    <span><i class="fa fa-plus fa-2x"></i> Chèn ảnh vào bài viết.</span>
+                                </div>
+                            </div>
+                            <div id="result_img"></div>
+                            <textarea name="project_info" id="project_info" class="form-control" rows="5"></textarea>
+                            
+                        </div>
+                    </div>
+                   
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Ảnh đại diện </label>
+                            <input type="hidden" name="inproject_img" id="inproject_img" />
+                            <div class="cat_img">
+                                <img id="project_img" src="" data-src="" style="width: 200px; height: 200px;" />
+                            </div>
+                            <div id="ul_cat_img1" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
+                                <div class="dz-default dz-message" data-dz-message style="margin: 0;">
+                                    <span><i class="fa fa-plus fa-2x"></i> Tải ảnh lên.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Số tiền đã huy động: </label>
+                            <input type="number" name="project_money1" id="project_money1" class="form-control" placeholder="Số tiền đã huy động" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Số tiền cần huy động: </label>
+                            <input type="number" name="project_money2" id="project_money2" class="form-control" placeholder="Số tiền cần huy động" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Danh mục dự án: </label>
+                            <input type="text" name="project_catname" id="project_catname" class="form-control" placeholder="Số tiền đã huy động" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Số tiền cần huy động: </label>
+                            <input type="number" name="project_money2" id="project_money2" class="form-control" placeholder="Số tiền cần huy động" />
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btn_project_add" onclick="project_save(event);">Cập nhật</button>
+
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+
+@section scripts {
+
+<script>
+    CKEDITOR.replace('project_info');
 </script>
+
+}

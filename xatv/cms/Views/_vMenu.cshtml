@@ -129,9 +129,21 @@
                 <li>
                     <a href="/cat/index"><i class="fa fa-dashboard fa-fw"></i> Quản trị danh mục dự án</a>
                 </li>
-                @*<li>
-                        <a href="products"><i class="fa fa-dashboard fa-fw"></i> Quản trị dự án</a>
-                    </li>*@
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dashboard fa-fw"></i>Tài khoản 
+                        @if (cms.Config.getCookie("editor") != "")
+                        {
+                            <text>@cms.Config.getCookie("editor")</text>
+                        }<i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/admin/logout">Đăng xuất</a>
+                        </li>
+
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

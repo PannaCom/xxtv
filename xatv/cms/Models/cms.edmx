@@ -159,6 +159,8 @@
           <Property Name="authorid" Type="bigint" />
           <Property Name="info" Type="ntext" />
           <Property Name="des_detail" Type="ntext" />
+          <Property Name="view_count" Type="int" />
+          <Property Name="date_finish" Type="datetime" />
         </EntityType>
         <EntityType Name="saoke">
           <Key>
@@ -394,6 +396,8 @@
           <Property Name="authorid" Type="Int64" />
           <Property Name="info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="des_detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="view_count" Type="Int32" />
+          <Property Name="date_finish" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -576,6 +580,8 @@
           <EntitySetMapping Name="projects_fund">
             <EntityTypeMapping TypeName="xaytruongModel.projects_fund">
               <MappingFragment StoreEntitySet="projects_fund">
+                <ScalarProperty Name="date_finish" ColumnName="date_finish" />
+                <ScalarProperty Name="view_count" ColumnName="view_count" />
                 <ScalarProperty Name="des_detail" ColumnName="des_detail" />
                 <ScalarProperty Name="info" ColumnName="info" />
                 <ScalarProperty Name="authorid" ColumnName="authorid" />
