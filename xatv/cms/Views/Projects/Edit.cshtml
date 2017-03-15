@@ -1,80 +1,394 @@
-﻿@model cms.Models.projects_fund
+﻿@model cms.Models.projects_fundVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Sửa dự án";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Sửa dự án</h2>
-
-<script src="/Scripts/ckeditor/ckeditor.js"></script>
-<div id="wrapper">
-        <!-- Navigation -->
-        @Html.Partial("~/Views/_vMenu.cshtml")
-        <!-- Page Content -->
-        <div id="page-wrapper">
-
-@using (Html.BeginForm("Edit", "Projects", FormMethod.Post, new { id = "EditForm" })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-       
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Tên dự án</label>
-                <input name="name" type="text" id="name" value="@Model.name" class="form-control" placeholder="Gõ tiêu đề"/>                
-        </div>
-
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Số tiền đã huy động</label>
-                <input name="money1" type="text" id="money1" value="@Model.money1" class="form-control" placeholder="Số tiền đã huy động"/>                
-        </div>
-        <div class="form-group">
-                <label for="room" style="width:auto;display:block;">Số tiền cần huy động</label>
-                <input name="money2" type="text" id="money2" value="@Model.money2" class="form-control" placeholder="Số tiền cần huy động"/>                
-        </div>
-        <p>
-            <button type="button" class="btn btn-info" onclick="checkField();">Thêm mới</button>
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
- </div>
-        <!-- /#page-wrapper -->        
-    </div>
-<script>
-    function checkField() {
-
-
-        if (document.getElementById("name").value == "") {
-            alert("Nhập tên dự án!");
-            document.getElementById("name").focus();
-            return false;
-        }
-
-        if (document.getElementById("money1").value == "") {
-            alert("Nhập số tiền đã huy động!");
-            document.getElementById("money1").focus();
-            return false;
-        }
-        if (document.getElementById("money2").value == "") {
-            alert("Nhập số tiền cần huy động!");
-            document.getElementById("money2").focus();
-            return false;
-        }
-        if (isNaN(document.getElementById("money1").value)) {
-            alert("Nhập số tiền đã huy động!");
-            document.getElementById("money1").focus();
-            return false;
-        }
-        if (isNaN(document.getElementById("money2").value)) {
-            alert("Nhập số tiền cần huy động!");
-            document.getElementById("money2").focus();
-            return false;
-        }
-        document.getElementById("EditForm").submit();
+<link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+<script src="~/Scripts/dropzone/dropzone.min.js"></script>
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+<link href="~/Content/xaytruong/js/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Content/xaytruong/js/jquery.datetimepicker.js"></script>
+<style>
+    .dropzone .dz-preview.dz-image-preview {
+        margin-top: -150px;
     }
-</script>
+</style>
+
+
+
+<div id="wrapper">
+    <!-- Navigation -->
+    @Html.Partial("~/Views/_vMenu.cshtml")
+    @if (Model != null)
+    {
+        ViewBag.Title += " " + Model.name;        
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h2>@ViewBag.Title</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a href="/projects/index" class="btn btn-primary">Quay lại danh sách</a>
+                <div class="panel panel-default" style="background: #f6f6f6;">
+                    <div class="panel-body">
+
+
+                        <form class="form-horizontal" method="post" id="form_project_add" name="form_project_add" enctype="multipart/form-data">
+                            @*<input type="hidden" name="project_id" id="project_id" value="@Model.id" />*@
+                            @Html.HiddenFor(m => m.id, htmlAttributes: new { @id = "project_id" })
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Tên dự án: </label>
+                                    @Html.TextBoxFor(m => m.name, htmlAttributes: new { @id = "project_name", @class = "form-control" })
+                                    @*<input type="text" name="project_name" id="project_name" class="form-control" placeholder="Tên dự án" value="@Model.name" />*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div id="ul_cat_img2" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
+                                        <div class="dz-default dz-message" data-dz-message style="margin: 0;">
+                                            <span><i class="fa fa-plus fa-2x"></i> Chèn ảnh vào bài viết.</span>
+                                        </div>
+                                    </div>
+                                    <div id="result_img"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-12">
+                                    <label class="control-label">Chi tiết dự án</label>
+                                    @Html.TextAreaFor(m => m.des_detail, htmlAttributes: new { @id = "project_des_detail" })
+                                    @*<textarea name="project_des_detail" id="project_des_detail" class="form-control" rows="5"></textarea>*@
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label class="control-label">Ảnh đại diện </label>
+                                    <input type="hidden" name="inproject_img" id="inproject_img" value="@Model.img" />
+                                    <div class="cat_img">
+                                        <img id="project_img" src="@Model.img" data-src="@Model.img" style="width: 200px; height: 200px;" />
+                                    </div>
+                                    <div id="ul_cat_img1" class="dropzone" style="padding: 0; height: 30px; min-height: 0; width: 200px; background: #023008; color: #fff;">
+                                        <div class="dz-default dz-message" data-dz-message style="margin: 0;">
+                                            <span><i class="fa fa-plus fa-2x"></i> Tải ảnh lên.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <label class="control-label">Mô tả tóm tắt dự án: </label>
+                                    @Html.TextAreaFor(m => m.info, htmlAttributes: new { @id = "project_info", @class = "form-control", placeholder = "Mô tả dự án" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Số tiền đã huy động: </label>
+                                    <input type="number" name="project_money1" id="project_money1" class="form-control" placeholder="Số tiền đã huy động" value="@Model.money1" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Số tiền cần huy động: </label>
+                                    <input type="number" name="project_money2" id="project_money2" class="form-control" placeholder="Số tiền cần huy động" value="@Model.money2" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Danh mục dự án: </label>
+                                    <input type="hidden" name="project_catname_id" id="project_catname_id" value="@Model.project_cat" />
+                                    <input type="text" name="project_catname" id="project_catname" class="form-control" placeholder="Danh mục dự án" onkeyup="getdanhmuc();" autocomplete="off" value="@Model.project_cat_name" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Tỉnh/thành</label>
+                                    <input type="hidden" name="project_province_id" id="project_province_id" value="@Model.province_id" />
+                                    <input type="text" name="project_province" id="project_province" class="form-control" placeholder="Nhập vào tỉnh thành" onkeyup="gettinhthanh();" autocomplete="off" value="@Model.province_name" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="control-label">Ngày kết thúc: </label>
+                                    <input type="text" name="project_datefinish" id="project_datefinish" class="form-control" placeholder="Dự án đến ngày" />
+                                    
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" id="btn_project_add" onclick="project_save(event);">Cập nhật</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <!-- /#page-wrapper -->
+
+    }
+</div>
+
+@section scripts {
+
+    <script>
+        CKEDITOR.replace('project_des_detail', {
+            height: '400px'
+        });
+
+        $(document).ready(function () {
+            
+            var optiondr1 = {
+                url: "/Upload/UploadPhoto",
+                addRemoveLinks: true,
+                maxFiles: 1,
+                maxFilesize: 5,
+                uploadMultiple: true,
+                acceptedFiles: "image/*",
+                dictFallbackMessage: "Trình duyệt của bạn không hỗ trợ kéo thả tệp để tải lên.",
+                dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+                dictFileTooBig: "Tệp có dung lượng quá lớn ({{filesize}}MiB). Dung lượng cho phép: {{maxFilesize}}MiB.",
+                dictInvalidFileType: "Tệp bạn chọn không được phép tải lên.",
+                dictResponseError: "Đã xảy ra lỗi {{statusCode}}.",
+                dictCancelUpload: "Hủy tải lên",
+                dictCancelUploadConfirmation: "Bạn chắc chắn muốn hủy tải lên?",
+                dictRemoveFile: "Loại bỏ tệp tin",
+                dictMaxFilesExceeded: "Bạn không thể tải lên quá 1 hình.",
+                success: function (file, response) {
+                    var imgPath = response.Message;
+                    if (imgPath !== "") {
+                        this.removeFile(file);
+                        $('#project_img').attr({ 'src': imgPath, 'data-src': imgPath });
+                        $('#inproject_img').val(imgPath);
+                    }
+                },
+                error: function (file, response) {
+                    alert(response);
+                    this.removeFile(file);
+                },
+                HiddenFilesPath: 'body'
+            };
+
+            var optiondr2 = {
+                url: "/Upload/UploadPhoto",
+                addRemoveLinks: true,
+                maxFiles: 1,
+                maxFilesize: 5,
+                uploadMultiple: true,
+                acceptedFiles: "image/*",
+                dictFallbackMessage: "Trình duyệt của bạn không hỗ trợ kéo thả tệp để tải lên.",
+                dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+                dictFileTooBig: "Tệp có dung lượng quá lớn ({{filesize}}MiB). Dung lượng cho phép: {{maxFilesize}}MiB.",
+                dictInvalidFileType: "Tệp bạn chọn không được phép tải lên.",
+                dictResponseError: "Đã xảy ra lỗi {{statusCode}}.",
+                dictCancelUpload: "Hủy tải lên",
+                dictCancelUploadConfirmation: "Bạn chắc chắn muốn hủy tải lên?",
+                dictRemoveFile: "Loại bỏ tệp tin",
+                dictMaxFilesExceeded: "Bạn không thể tải lên quá 1 hình.",
+                success: function (file, response) {
+                    var imgPath = response.Message;
+                    if (imgPath !== "") {
+                        //file.previewElement.classList.add("dz-success");
+                        this.removeFile(file);
+                        $('#result_img').append('<img class="img-responsive" style="float: left; margin-right: 5px;" src="' + imgPath + '" />')
+                    }
+                },
+                error: function (file, response) {
+                    alert(response);
+                    this.removeFile(file);
+                },
+                HiddenFilesPath: 'body'
+            };
+
+            Dropzone.autoDiscover = false;
+            var up1 = new Dropzone("div#ul_cat_img1", optiondr1);
+            var up2 = new Dropzone("div#ul_cat_img2", optiondr2);
+
+            $('#project_datefinish').datetimepicker({
+                dayOfWeekStart: 1,
+                lang: 'en',
+                disabledDates: ['1986/01/08', '1986/01/09', '1986/01/10']
+            });
+            setTimeout(function () {
+                $('#project_datefinish').datetimepicker({ value: '@Model.strdate_finish', format: 'Y/m/d' });
+            }, 1000);
+
+            
+
+        })
+
+        function getdanhmuc() {
+            // Overrides the default autocomplete filter function to search only from the beginning of the string
+            $.ui.autocomplete.filter = function (array, term) {
+                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+                return $.grep(array, function (value) {
+                    return matcher.test(value.label || value.value || value);
+                });
+            };
+            var keyword = document.getElementById("project_catname").value;
+            if (keyword == "") {
+                document.getElementById("project_catname_id").value = 0;
+            }
+            var urlSearch = '/projects/getcatproject?keyword=';
+            $('#project_catname').autocomplete({
+                source: urlSearch + keyword,
+                select: function (event, ui) {
+                    var label = ui.item.label;
+                    var value = ui.item.value;
+                    $("#project_catname").val(label);
+                    $("#project_catname_id").val(value);
+                    return false;
+                },
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" }
+            });
+        }
+
+        function gettinhthanh() {
+            // Overrides the default autocomplete filter function to search only from the beginning of the string
+            $.ui.autocomplete.filter = function (array, term) {
+                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+                return $.grep(array, function (value) {
+                    return matcher.test(value.label || value.value || value);
+                });
+            };
+            var keyword = document.getElementById("project_province").value;
+            if (keyword == "") {
+                document.getElementById("project_province_id").value = 0;
+            }
+            var urlSearch = '/projects/gettinhthanh?keyword=';
+            $('#project_province').autocomplete({
+                source: urlSearch + keyword,
+                select: function (event, ui) {
+                    var label = ui.item.label;
+                    var value = ui.item.value;
+                    $("#project_province").val(ui.item.label);
+                    $("#project_province_id").val(ui.item.value);
+                    return false;
+                },
+                minLength: 1,
+                position: { my: "right top", at: "right bottom" }
+            });
+        }
+
+
+        function project_save(e) {
+            for (var instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+            e.preventDefault();
+            if (document.getElementById("project_name").value === "") {
+                toastr.warning('Vui lòng nhập tên dự án!')
+                document.getElementById("project_name").focus();
+                return false;
+            }
+            //project_des_detail
+            if (CKEDITOR.instances.project_des_detail.getData() === "") {
+                toastr.warning('Vui lòng nhập nội dung chi tiết cho dự án!')
+                return false;
+            }
+            document.getElementById("project_des_detail").value = CKEDITOR.instances.project_des_detail.getData();
+
+            if (document.getElementById("inproject_img").value === "") {
+                toastr.warning('Vui lòng chọn ảnh đại diện cho dự án!')
+                document.getElementById("project_img").focus();
+                return false;
+            }
+            if (document.getElementById("project_info").value === "") {
+                toastr.warning('Vui lòng nhập mô tả dự án!')
+                document.getElementById("project_info").focus();
+                return false;
+            }
+
+            if (document.getElementById("project_money1").value < 0) {
+                toastr.warning('Số tiền phải lớn hơn hoặc bằng 0!')
+                document.getElementById("project_money1").focus();
+                return false;
+            }
+
+            if (document.getElementById("project_money2").value === "") {
+                toastr.warning('Vui lòng nhập số tiền cần huy động!')
+                document.getElementById("project_money2").focus();
+                return false;
+            }
+
+            if (document.getElementById("project_catname").value === "") {
+                toastr.warning('Vui lòng nhập danh mục dự án!')
+                document.getElementById("project_catname").focus();
+                return false;
+            }
+
+            if (document.getElementById("project_province").value === "") {
+                toastr.warning('Vui lòng nhập tỉnh thành!')
+                document.getElementById("project_province").focus();
+                return false;
+            }
+
+            var dataadd = {
+                id: document.getElementById("project_id").value,
+                name: document.getElementById("project_name").value,
+                money1: document.getElementById("project_money1").value,
+                money2: document.getElementById("project_money2").value,
+                img: document.getElementById("inproject_img").value,
+                date_finish: $('#project_datefinish').val(),
+                project_cat: document.getElementById("project_catname_id").value,
+                project_cat_name: document.getElementById("project_catname").value,
+                province_id: document.getElementById("project_province_id").value,
+                province_name: document.getElementById("project_province").value,
+                info: document.getElementById("project_info").value,
+                des_detail: document.getElementById("project_des_detail").value
+            };
+            console.log(dataadd);
+            $('#btn_project_add').html("Đang cập nhật dự án...");
+            document.getElementById("btn_project_add").disabled = true;
+
+            $.ajax({
+                url: '/Projects/Create',
+                data: dataadd,
+                method: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        //console.log(data);
+                        document.getElementById("project_id").value = data.id;
+                        document.getElementById("project_name").value = data.name;
+                        document.getElementById("project_money1").value = data.money1;
+                        document.getElementById("project_money2").value = data.money2;
+                        document.getElementById("inproject_img").value = data.img;
+                        $('#project_datefinish').datetimepicker({ value: data.strdate_finish, format: 'Y/m/d' });
+                        document.getElementById("project_catname_id").value = data.project_cat;
+                        document.getElementById("project_catname").value = data.project_cat_name;
+                        document.getElementById("project_province_id").value = data.province_id;
+                        document.getElementById("project_province").value = data.province_name;
+                        document.getElementById("project_info").value = data.info;
+                        CKEDITOR.instances['project_des_detail'].setData(data.project_des_detail);
+                        toastr.success('Đã cập nhật dự án mới!', 'Thông báo');
+                    }
+                    $('#btn_project_add').html("Cập nhật");
+                    document.getElementById("btn_project_add").disabled = false;
+                },
+                error: function () {
+                    toastr.warning('Máy chủ quá tải, vui lòng thử lại sau!');
+                }
+            })
+
+
+        }
+
+
+    </script>
+}

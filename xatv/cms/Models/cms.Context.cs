@@ -40,6 +40,7 @@ namespace cms.Models
         public virtual DbSet<donor> donors { get; set; }
         public virtual DbSet<web_link> web_link { get; set; }
         public virtual DbSet<project_cat> project_cat { get; set; }
+        public virtual DbSet<province> provinces { get; set; }
         public virtual DbSet<projects_fund> projects_fund { get; set; }
     }
 }

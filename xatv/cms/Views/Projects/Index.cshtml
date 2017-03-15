@@ -113,3 +113,43 @@
     </div>
 
 </div>
+
+@section scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.delete_project').on('click', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var $row = $(this).closest('tr');
+                reset();
+                alertify.confirm("Bạn chắc chắn muốn xóa bài viết này?", function (e) {
+                    if (e) {
+                        $.ajax({
+                            url: '/projects/delete',
+                            data: { id: id },
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+                                    if (data == "1") {
+                                        $row.remove();
+                                        alertify.success("Bạn đã xóa bài viết thành công.");
+                                    }
+                                }
+                            },
+                            error: function () {
+                                toastr.warning('Máy chủ quá tải, vui lòng thử lại sau!');
+                            }
+                        })
+
+                    } else {
+                        alertify.error("Bạn đã hủy xóa");
+                    }
+                });
+                return false;
+            })
+        })
+
+    </script>
+}

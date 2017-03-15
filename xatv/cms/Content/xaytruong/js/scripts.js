@@ -49,16 +49,16 @@ if ($('.totop').length) {
 function getDayLeft(s, d) {
     $(s).countdown(d)
     .on('update.countdown', function (event) {
-        var format = '';
+        var format = 'Hoàn tất';
         if (event.offset.totalDays > 0) {
             format = 'Còn lại %-d ngày';
         }
         //if (event.offset.weeks > 0) {
         //    format = 'Còn lại %-w tuần %!w ' + format;
         //}
-        if (event.offset.totalDays = 0) {
-            format = 'Hoàn tất';
-        }
+        //if (event.offset.totalDays = 0) {
+        //    format = 'Hoàn tất';
+        //}
         $(this).html(event.strftime(format));
     })
     .on('finish.countdown', function (event) {

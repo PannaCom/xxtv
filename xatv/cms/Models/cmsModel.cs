@@ -32,4 +32,21 @@ namespace cms.Models
         public int numProject { get; set; }
     }
 
+    public class projects_fundVM
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public Nullable<decimal> money1 { get; set; }
+        public Nullable<decimal> money2 { get; set; }
+        public string img { get; set; }
+        public Nullable<System.DateTime> date_finish { get; set; }
+        public string strdate_finish { get; set; }
+        public Nullable<int> project_cat { get; set; }
+        public string project_cat_name { get; set; }
+        public Nullable<int> province_id { get; set; }
+        public string province_name { get; set; }
+        public string info { get; set; }
+        public string des_detail { get; set; }
+    }
+
 }

@@ -46,9 +46,13 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Excel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Excel.dll</HintPath>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
@@ -276,12 +280,14 @@
     <Compile Include="Config.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CatController.cs" />
     <Compile Include="Controllers\GopYController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\ThongKeController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -304,7 +310,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>cms.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\cmsModel.cs" />
     <Compile Include="Models\daugia.cs">
+      <DependentUpon>cms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\donor.cs">
       <DependentUpon>cms.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\editor.cs">
@@ -340,12 +350,24 @@
     <Compile Include="Models\projects_fund.cs">
       <DependentUpon>cms.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\project_cat.cs">
+      <DependentUpon>cms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\province.cs">
+      <DependentUpon>cms.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\saoke.cs">
+      <DependentUpon>cms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\web_link.cs">
       <DependentUpon>cms.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alertify.bootstrap.css" />
+    <Content Include="Content\alertify.core.css" />
+    <Content Include="Content\alertify.default.css" />
     <Content Include="Content\assets\animate\animate.css" />
     <Content Include="Content\assets\animate\set.css" />
     <Content Include="Content\assets\bootstrap\css\bootstrap.css" />
@@ -897,9 +919,19 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\toastr.min.js" />
     <Content Include="Content\xaytruong\css\blog-home.css" />
     <Content Include="Content\xaytruong\css\Styles.css" />
+    <Content Include="Content\xaytruong\flexslider.css" />
+    <Content Include="Content\xaytruong\fonts\flexslider-icon.svg" />
     <Content Include="Content\xaytruong\images\xaytruong.png" />
+    <Content Include="Content\xaytruong\jquery.flexslider-min.js" />
+    <Content Include="Content\xaytruong\jquery.flexslider.js" />
+    <Content Include="Content\xaytruong\js\jquery.countdown.min.js" />
+    <Content Include="Content\xaytruong\js\jquery.datetimepicker.css" />
+    <Content Include="Content\xaytruong\js\jquery.datetimepicker.js" />
     <Content Include="Content\xaytruong\js\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -910,6 +942,16 @@
       <LastGenOutput>cms.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Images\continue.gif" />
+    <Content Include="Images\donors\09004736_xay-dung-dia-oc-hoa-binh.jpg" />
+    <Content Include="Images\donors\09464718_logo bao cong an tp.hcm.png" />
+    <Content Include="Images\donors\10240418_logo FirstNews.png" />
+    <Content Include="Images\donors\10244136_mms-logo Minh My.png" />
+    <Content Include="Images\donors\15020821_logo-thien-hoa.jpg" />
+    <Content Include="Images\donors\15030528_logo-ngan-hang-nam-a.jpg" />
+    <Content Include="Images\donors\15214789_ThepVietUc.jpg" />
+    <Content Include="Images\donors\15240171_logo-SSE.jpg" />
+    <Content Include="Images\donors\16465903_14360410_VIDOTOUR.jpg" />
+    <Content Include="Images\donors\ctthanhc1.jpg" />
     <Content Include="Images\elbow-end-minus.gif" />
     <Content Include="Images\elbow-end.gif" />
     <Content Include="Images\elbow-line.gif" />
@@ -917,6 +959,12 @@
     <Content Include="Images\elbow.gif" />
     <Content Include="Images\full.gif" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\projects\529.jpg" />
+    <Content Include="Images\projects\560.jpg" />
+    <Content Include="Images\projects\561.jpg" />
+    <Content Include="Images\projects\562.jpg" />
+    <Content Include="Images\projects\563.jpg" />
+    <Content Include="Images\projects\564.jpg" />
     <Content Include="Models\cms.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>cms.edmx</DependentUpon>
@@ -930,18 +978,209 @@
       <DependentUpon>cms.edmx</DependentUpon>
       <LastGenOutput>cms.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\alertify.js" />
+    <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\az.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de-ch.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\fo.js" />
+    <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\oc.js" />
+    <Content Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.css" />
+    <Content Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\cursors\cursor-disabled.svg" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\cursors\cursor.svg" />
+    <Content Include="Scripts\ckeditor\plugins\copyformatting\styles\copyformatting.css" />
+    <Content Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="Scripts\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="Scripts\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="Scripts\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\af.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ar.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\az.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\bg.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\bn.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\bs.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\cs.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\cy.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\da.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\de-ch.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\de.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\el.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\en-au.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\en-ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\en-gb.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\en.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\eo.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\es.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\et.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\fa.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\fi.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\fo.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\fr-ca.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\fr.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\gl.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\gu.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\he.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\hi.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\hr.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\hu.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\id.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\is.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\it.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ja.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ka.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\km.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ko.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ku.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\lt.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\lv.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\mk.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\mn.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ms.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\nb.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\nl.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\no.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\oc.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\pl.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\pt-br.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\pt.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ro.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ru.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\si.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sk.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sl.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sq.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sr-latn.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sr.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\sv.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\th.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\tr.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\tt.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\ug.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\uk.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\vi.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\zh-cn.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\lang\zh.js" />
+    <Content Include="Scripts\ckeditor\plugins\font\plugin.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="Scripts\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="Scripts\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="Scripts\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Scripts\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="Scripts\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="Scripts\ckeditor\plugins\preview\preview.html" />
     <Content Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
     <Content Include="Scripts\ckeditor\plugins\scayt\README.md" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\skins\moono-lisa\scayt.css" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="Scripts\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\az.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de-ch.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\eu.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ko.js" />
+    <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\oc.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="Scripts\ckeditor\plugins\templates\templates\images\template3.gif" />
     <Content Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
     <Content Include="Scripts\ckeditor\plugins\wsc\README.md" />
+    <Content Include="Scripts\ckeditor\plugins\wsc\skins\moono-lisa\wsc.css" />
     <Content Include="Scripts\ckeditor\README.md" />
     <Content Include="Scripts\ckeditor\samples\assets\posteddata.php" />
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\samples\sample_posteddata.php" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\dialog.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\dialog_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\dialog_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\dialog_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\editor.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\editor_gecko.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\editor_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\editor_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\editor_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\icons.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\icons_hidpi.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\arrow.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\hidpi\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\hidpi\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\hidpi\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\images\spinner.gif" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <Content Include="Content\assets\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\assets\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
@@ -1271,6 +1510,10 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Content\xaytruong\fonts\flexslider-icon.eot" />
+    <Content Include="Content\xaytruong\fonts\flexslider-icon.ttf" />
+    <Content Include="Content\xaytruong\fonts\flexslider-icon.woff" />
+    <Content Include="Content\toastr.js.map" />
     <None Include="Properties\PublishProfiles\xaytruong.pubxml" />
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -1538,6 +1781,14 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\core.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Scripts\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Scripts\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1551,6 +1802,8 @@
     <Content Include="Scripts\images\ui-icons_454545_256x240.png" />
     <Content Include="Scripts\images\ui-icons_888888_256x240.png" />
     <Content Include="Scripts\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="Scripts\ckeditor\skins\moono-lisa\readme.md" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -1644,6 +1897,25 @@
     <Content Include="Views\Shared\xaytruong\_script_googleanalystic.cshtml" />
     <Content Include="Views\Shared\xaytruong\_urlpage.cshtml" />
     <Content Include="Views\Home\Index22.cshtml" />
+    <Content Include="Views\Home\_LoadNewItems.cshtml" />
+    <Content Include="Views\Home\_LoadNewTopItem.cshtml" />
+    <Content Include="Views\Home\_LoadProjectXayTruong.cshtml" />
+    <Content Include="Views\Home\_LoadDanhMuc.cshtml" />
+    <Content Include="Views\Home\_LoadDonors.cshtml" />
+    <Content Include="Views\Home\_LoadLienKetWeb.cshtml" />
+    <Content Include="Views\Home\donggop.cshtml" />
+    <Content Include="Views\Home\_LoadProjectAnother.cshtml" />
+    <Content Include="Views\Home\_LoadProjectCat.cshtml" />
+    <Content Include="Views\Home\ProjectCat.cshtml" />
+    <Content Include="Views\Home\ProjectDetail.cshtml" />
+    <Content Include="Views\Cat\add.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Cat\edit.cshtml" />
+    <Content Include="Views\Cat\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin2.cshtml" />
+    <Content Include="Views\Shared\_MenuAdminPartial2.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

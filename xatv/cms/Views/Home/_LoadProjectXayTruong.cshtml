@@ -28,14 +28,18 @@
                                     <a href="@_link">@item.name</a>
                                 </div>
                                 <div class="kh-content">
-                                    @if (item.des.Length > 88)
+                                    @if (item.info != null)
                                     {
-                                        @item.des.Substring(0, 88).ToString()<text>...</text>
+                                        if (item.info.Length > 88)
+                                        {
+                                            @item.info.Substring(0, 88).ToString()<text>...</text>
+                                        }
+                                        else
+                                        {
+                                            @item.info
+                                        }
                                     }
-                                    else
-                                    {
-                                        @item.des
-                                    }
+                                    
                                 </div>
                             </div>
                             <div class="clear"></div>
@@ -51,7 +55,7 @@
                                 <span class="kh-progress-price"><span>@percent</span>%</span>
                                 <span class="kh-clock">
                                     <i class="fa fa-clock-o"></i>
-                                    <span class="clock-day-@i" data-clock="@string.Format("{0:yyyy/MM/dd}", item.date_init)"></span>
+                                    <span class="clock-day-@i" data-clock="@string.Format("{0:yyyy/MM/dd}", item.date_finish)"></span>
                                 </span>
 
                             </div>

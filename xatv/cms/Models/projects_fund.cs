@@ -21,13 +21,13 @@ namespace cms.Models
         public Nullable<decimal> money2 { get; set; }
         public string img { get; set; }
         public Nullable<System.DateTime> date_init { get; set; }
+        public Nullable<System.DateTime> date_finish { get; set; }
         public Nullable<int> project_cat { get; set; }
         public string orderby { get; set; }
-        public string provinces { get; set; }
-        public Nullable<long> authorid { get; set; }
+        public Nullable<int> province_id { get; set; }
+        public Nullable<int> authorid { get; set; }
         public string info { get; set; }
         public string des_detail { get; set; }
         public Nullable<int> view_count { get; set; }
-        public Nullable<System.DateTime> date_finish { get; set; }
     }
 }
